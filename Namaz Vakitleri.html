@@ -1,0 +1,497 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Namaz Vakitleri</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&family=Lora:wght@400;500;600&display=swap">
+<style>
+/* Layout: ince üst şerit, ortalanmış tek sütun; koyu yeşil geri sayım kartı sayfanın tek vurgusu, vakit kartları sakin kalır. */
+:root {
+  --bg: #f7f5f2;
+  --surface: #fcfbf9;
+  --line: #e5e1d9;
+  --fg: #1d1d1b;
+  --muted: #7b776f;
+  --time: #6f6c66;
+  --green: #14392f;
+  --green-hi: #1b4d3f;
+  --on-green: #f1efe8;
+  --on-green-dim: #b9c7c0;
+  --gold: #e9b235;
+  --pill: #ebe8e1;
+  --font-display: "Lora", Georgia, "Times New Roman", serif;
+  --font-body: "DM Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #111513;
+    --surface: #181d1a;
+    --line: #29302c;
+    --fg: #ecebe5;
+    --muted: #9a9d95;
+    --time: #b4b6ae;
+    --green: #123a30;
+    --green-hi: #1a5444;
+    --on-green: #f1efe8;
+    --on-green-dim: #aebdb6;
+    --gold: #e9b235;
+    --pill: #222925;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #111513;
+  --surface: #181d1a;
+  --line: #29302c;
+  --fg: #ecebe5;
+  --muted: #9a9d95;
+  --time: #b4b6ae;
+  --green: #123a30;
+  --green-hi: #1a5444;
+  --on-green: #f1efe8;
+  --on-green-dim: #aebdb6;
+  --gold: #e9b235;
+  --pill: #222925;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+button { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; border-radius: 6px; }
+
+/* Üst şerit */
+.bar {
+  border-bottom: 1px solid var(--line);
+  padding-block: 12px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.bar-in {
+  max-width: 624px; margin: 0 auto;
+  display: flex; justify-content: space-between; align-items: center; gap: 12px;
+}
+.loc-pill {
+  display: inline-flex; align-items: center; gap: 7px;
+  background: var(--pill); border-radius: 999px; padding: 6px 12px;
+  font-size: 11.5px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase;
+}
+.loc-pill svg { flex: none; }
+.clock { font-family: var(--font-mono); font-size: 14px; color: var(--muted); letter-spacing: .04em; font-variant-numeric: tabular-nums; }
+
+/* Sayfa */
+.page {
+  max-width: 624px; margin: 0 auto;
+  padding-block: 28px 56px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.head { display: flex; justify-content: space-between; align-items: flex-end; gap: 12px 24px; flex-wrap: wrap; margin-bottom: 22px; }
+.head > div { min-width: 0; }
+h1 { font-family: var(--font-display); font-weight: 500; font-size: clamp(32px, 7vw, 40px); line-height: 1.1; margin: 0 0 10px; letter-spacing: -.01em; text-wrap: balance; }
+.sub { display: flex; align-items: center; gap: 6px; color: var(--muted); font-size: 13.5px; }
+.head-r { text-align: right; }
+.date { font-family: var(--font-display); font-size: 19px; margin: 0 0 6px; }
+.hijri { color: var(--muted); font-size: 13.5px; }
+.hijri b { font-weight: 400; color: var(--green-hi); }
+:root[data-theme="dark"] .hijri b { color: var(--gold); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .hijri b { color: var(--gold); } }
+
+/* Geri sayım kartı */
+.hero {
+  position: relative; overflow: hidden; isolation: isolate;
+  background: linear-gradient(160deg, #1d4a3d 0%, #0f2f26 100%);
+  color: var(--on-green);
+  border-radius: 28px;
+  padding: 28px 32px 26px;
+  box-shadow: 0 14px 36px -14px rgba(10, 38, 30, .55);
+}
+.hero-art { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -2; }
+.hero::before { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(90deg, rgba(10,36,29,.62), rgba(10,36,29,.28) 60%, rgba(10,36,29,.4)); }
+.hero-top { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+.next-pill {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.07);
+  padding: 6px 13px 6px 11px; border-radius: 999px;
+  font-size: 11.5px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase;
+}
+.next-pill svg { color: var(--gold); }
+.now-label { font-size: 14px; color: var(--on-green); opacity: .9; }
+.until { font-family: var(--font-display); font-size: clamp(21px, 4.6vw, 24px); margin: 22px 0 2px; font-weight: 500; }
+.count {
+  font-family: var(--font-mono); font-weight: 700;
+  font-size: clamp(46px, 14vw, 82px); line-height: 1.08; letter-spacing: .01em;
+  font-variant-numeric: tabular-nums; white-space: nowrap;
+}
+.track { position: relative; height: 5px; border-radius: 99px; background: rgba(255,255,255,.14); margin: 22px 0 14px; overflow: hidden; }
+.fill { position: absolute; inset: 0 auto 0 0; width: 0; border-radius: 99px; background: var(--gold); transition: width .9s linear; }
+.range { display: flex; justify-content: space-between; gap: 12px; font-size: 14px; color: var(--on-green-dim); }
+.range span { font-family: var(--font-body); }
+.range b { font-family: var(--font-mono); font-weight: 400; letter-spacing: .03em; }
+
+/* Sekmeler */
+.tabs { display: grid; grid-template-columns: 1fr 1fr; margin: 30px 0 18px; }
+.tab { background: none; border: 0; border-bottom: 1px solid var(--line); padding: 10px 0 12px; font-size: 14.5px; color: var(--muted); cursor: pointer; text-align: center; margin: 0 4px; }
+.tab[aria-selected="true"] { color: var(--fg); border-bottom: 2px solid var(--fg); margin-bottom: -1px; font-weight: 500; }
+.tab:first-child { margin-left: 0; }
+.tab:last-child { margin-right: 0; }
+
+/* Vakit kartları */
+.cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.card {
+  position: relative;
+  background: var(--surface); border: 1px solid var(--line); border-radius: 20px;
+  padding: 18px 18px 16px;
+  min-height: 86px;
+}
+.card .row { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.card .name { font-size: 11.5px; font-weight: 500; letter-spacing: .15em; text-transform: uppercase; color: var(--muted); }
+.card .ico { color: var(--muted); display: inline-flex; }
+.card .t { font-family: var(--font-mono); font-size: 27px; font-weight: 500; color: var(--time); margin: 8px 0 0; letter-spacing: .02em; font-variant-numeric: tabular-nums; }
+.card.is-next { background: var(--green); border-color: var(--green); box-shadow: 0 10px 24px -12px rgba(10,38,30,.6); }
+.card.is-next .name { color: var(--on-green); font-weight: 600; }
+.card.is-next .ico { color: var(--gold); }
+.card.is-next .t { color: var(--on-green); font-weight: 700; }
+.badge {
+  position: absolute; top: -9px; right: 14px;
+  background: var(--gold); color: #3a2a00; border-radius: 99px;
+  font-size: 9.5px; font-weight: 700; letter-spacing: .14em; padding: 2px 9px; text-transform: uppercase;
+}
+.card.passed .t { opacity: .62; }
+
+/* Aylık takvim */
+.month-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; gap: 12px; }
+.month-head h2 { font-family: var(--font-display); font-weight: 500; font-size: 22px; margin: 0; }
+.nav { display: flex; gap: 8px; }
+.nav button { width: 38px; height: 38px; border-radius: 12px; border: 1px solid var(--line); background: var(--surface); cursor: pointer; display: grid; place-items: center; }
+.nav button:hover { border-color: var(--muted); }
+.table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 20px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; min-width: 520px; font-variant-numeric: tabular-nums; }
+th { font-size: 11px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); text-align: right; padding: 14px 12px 12px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+th:first-child, td:first-child { text-align: left; padding-left: 18px; }
+td { font-family: var(--font-mono); font-size: 14px; text-align: right; padding: 10px 12px; color: var(--time); border-bottom: 1px solid var(--line); white-space: nowrap; }
+tr:last-child td { border-bottom: 0; }
+td:first-child { font-family: var(--font-body); color: var(--fg); }
+td:first-child small { color: var(--muted); font-size: 12px; margin-left: 6px; }
+tr.today td { background: var(--green); color: var(--on-green); font-weight: 600; border-color: var(--green); }
+tr.today td:first-child { border-radius: 0; }
+tr.today td small { color: var(--on-green-dim); }
+tr.fri td:first-child small { color: var(--gold); }
+.note { color: var(--muted); font-size: 12.5px; margin: 26px 0 0; text-wrap: pretty; }
+
+@media (max-width: 560px) {
+  .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .hero { padding: 22px 20px 20px; border-radius: 24px; }
+  .head-r { text-align: left; }
+  .card .t { font-size: 25px; }
+}
+@media (prefers-reduced-motion: reduce) { .fill { transition: none; } }
+</style>
+
+<header class="bar">
+  <div class="bar-in">
+    <span class="loc-pill">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+      Sarıyer, İstanbul
+    </span>
+    <span class="clock" id="clock" aria-label="Şu anki saat">--:--:--</span>
+  </div>
+</header>
+
+<main class="page">
+  <div class="head">
+    <div>
+      <h1>Namaz Vakitleri</h1>
+      <div class="sub">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+        Sarıyer, İstanbul
+      </div>
+    </div>
+    <div class="head-r">
+      <p class="date" id="date">—</p>
+      <div class="hijri"><span id="hijri">—</span> (<b>Hicri</b>)</div>
+    </div>
+  </div>
+
+  <section class="hero" aria-live="off">
+    <svg class="hero-art" viewBox="0 0 600 320" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <defs>
+        <linearGradient id="water" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#ffffff" stop-opacity=".10"/>
+          <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+        </linearGradient>
+      </defs>
+      <!-- Köprü -->
+      <g fill="none" stroke="#ffffff" stroke-opacity=".2" stroke-width="2">
+        <path d="M250 214 H600"/>
+        <path d="M250 214 Q 365 150 430 120"/>
+        <path d="M430 120 Q 487 205 545 120"/>
+        <path d="M545 120 Q 575 140 600 190"/>
+        <path d="M430 120 V214 M545 120 V214" stroke-width="5"/>
+      </g>
+      <g stroke="#ffffff" stroke-opacity=".1" stroke-width="1">
+        <path d="M300 214 V176 M340 214 V162 M380 214 V148 M470 214 V190 M487 214 V196 M505 214 V190 M570 214 V140"/>
+      </g>
+      <!-- Camii -->
+      <g fill="#ffffff" fill-opacity=".16">
+        <rect x="76" y="196" width="150" height="40"/>
+        <path d="M102 196 a49 49 0 0 1 98 0Z"/>
+        <path d="M148 147 h6 v-14 h-6Z"/>
+        <rect x="64" y="130" width="9" height="106"/>
+        <path d="M62 130 l6.5 -26 l6.5 26Z"/>
+        <rect x="229" y="130" width="9" height="106"/>
+        <path d="M227 130 l6.5 -26 l6.5 26Z"/>
+        <path d="M80 196 a14 14 0 0 1 28 0Z M170 196 a14 14 0 0 1 28 0Z"/>
+      </g>
+      <!-- Kıyı ve su -->
+      <rect x="0" y="236" width="600" height="84" fill="url(#water)"/>
+      <g stroke="#ffffff" stroke-opacity=".07" stroke-width="1.5">
+        <path d="M0 246 H600 M0 258 H600 M0 272 H600 M0 288 H600 M0 306 H600"/>
+      </g>
+      <g fill="#ffffff" fill-opacity=".05">
+        <rect x="76" y="238" width="150" height="26"/>
+        <rect x="64" y="238" width="9" height="40"/>
+        <rect x="229" y="238" width="9" height="40"/>
+        <rect x="430" y="216" width="5" height="40"/>
+        <rect x="545" y="216" width="5" height="40"/>
+      </g>
+    </svg>
+
+    <div class="hero-top">
+      <span class="next-pill">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="14" r="7"/><path d="M12 10v4l2 2M9.5 2h5M12 2v3"/></svg>
+        Sıradaki vakit
+      </span>
+      <span class="now-label" id="nowLabel">—</span>
+    </div>
+    <h2 class="until" id="until">—</h2>
+    <div class="count" id="count" role="timer">00:00:00</div>
+    <div class="track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="bar"><div class="fill" id="fill"></div></div>
+    <div class="range"><span id="rFrom">—</span><span id="rTo">—</span></div>
+  </section>
+
+  <div class="tabs" role="tablist">
+    <button class="tab" role="tab" id="tab-today" aria-selected="true" aria-controls="panel-today">Bugün</button>
+    <button class="tab" role="tab" id="tab-month" aria-selected="false" aria-controls="panel-month">Aylık Takvim</button>
+  </div>
+
+  <section id="panel-today" role="tabpanel" aria-labelledby="tab-today">
+    <div class="cards" id="cards"></div>
+  </section>
+
+  <section id="panel-month" role="tabpanel" aria-labelledby="tab-month" hidden>
+    <div class="month-head">
+      <h2 id="monthTitle">—</h2>
+      <div class="nav">
+        <button id="prev" aria-label="Önceki ay"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>
+        <button id="next" aria-label="Sonraki ay"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>
+      </div>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Tarih</th><th>İmsak</th><th>Güneş</th><th>Öğle</th><th>İkindi</th><th>Akşam</th><th>Yatsı</th></tr></thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <p class="note">Vakitler Sarıyer koordinatlarına (41,17° K · 29,05° D) göre hesaplanır, saat dilimi UTC+3. Diyanet takvimiyle bir iki dakikalık fark çıkabilir.</p>
+</main>
+
+<script>
+(function () {
+  var LAT = 41.17, LON = 29.05, TZ = 3;
+  var NAMES = ["İmsak", "Güneş", "Öğle", "İkindi", "Akşam", "Yatsı"];
+  var KEYS = ["imsak", "gunes", "ogle", "ikindi", "aksam", "yatsi"];
+  var OFF = { imsak: 0.12, gunes: -6.86, ogle: 4.59, ikindi: 4.88, aksam: 7.03, yatsi: -0.6 };
+  var DAYS = ["Pazar", "Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi"];
+  var DAYS_S = ["Paz", "Pzt", "Sal", "Çar", "Per", "Cum", "Cmt"];
+  var MONTHS = ["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"];
+  var HIJRI = ["Muharrem", "Safer", "Rebiülevvel", "Rebiülahir", "Cemaziyelevvel", "Cemaziyelahir", "Recep", "Şaban", "Ramazan", "Şevval", "Zilkade", "Zilhicce"];
+
+  var ICONS = {
+    imsak: '<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z"/><path d="M18 3v4M16 5h4"/></svg>',
+    gunes: '<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v5M9.5 5.5 12 3l2.5 2.5"/><path d="M4 19h16M7 19a5 5 0 0 1 10 0"/><path d="M3 14.5l1.5.8M21 14.5l-1.5.8M5.6 10.2l1.2 1.2M18.4 10.2l-1.2 1.2"/></svg>',
+    ogle: '<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.6"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"/></svg>',
+    ikindi: '<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15.5 3v1.6M20.2 5.3l-1.1 1.1M22 10h-1.6M10.8 5.3l1.1 1.1"/><path d="M19 10a3.5 3.5 0 0 0-6.7-1.3"/><path d="M7.5 20h8a3.5 3.5 0 0 0 .3-7 5 5 0 0 0-9.6 1.2A3 3 0 0 0 7.5 20Z"/></svg>',
+    aksam: '<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V3M9.5 5.5 12 8l2.5-2.5"/><path d="M4 19h16M7 19a5 5 0 0 1 10 0"/><path d="M3 14.5l1.5.8M21 14.5l-1.5.8M5.6 10.2l1.2 1.2M18.4 10.2l-1.2 1.2"/></svg>',
+    yatsi: '<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 14.2A8.5 8.5 0 0 1 9.8 3.5a8.5 8.5 0 1 0 10.7 10.7Z"/></svg>'
+  };
+
+  /* Güneş konumu ve vakit hesabı */
+  function rad(d) { return d * Math.PI / 180; }
+  function deg(r) { return r * 180 / Math.PI; }
+  function jdOf(y, m, d) {
+    if (m <= 2) { y--; m += 12; }
+    var A = Math.floor(y / 100), B = 2 - A + Math.floor(A / 4);
+    return Math.floor(365.25 * (y + 4716)) + Math.floor(30.6001 * (m + 1)) + d + B - 1524.5;
+  }
+  function sun(jd) {
+    var D = jd - 2451545.0;
+    var g = rad((357.529 + 0.98560028 * D) % 360);
+    var q = (280.459 + 0.98564736 * D) % 360;
+    var L = rad((q + 1.915 * Math.sin(g) + 0.020 * Math.sin(2 * g)) % 360);
+    var e = rad(23.439 - 0.00000036 * D);
+    var RA = deg(Math.atan2(Math.cos(e) * Math.sin(L), Math.cos(L))) / 15;
+    RA = ((RA % 24) + 24) % 24;
+    var eqt = q / 15 - RA;
+    eqt = ((eqt + 12) % 24 + 24) % 24 - 12;
+    return { decl: Math.asin(Math.sin(e) * Math.sin(L)), eqt: eqt };
+  }
+  function ha(alt, decl) {
+    var c = (Math.sin(rad(alt)) - Math.sin(rad(LAT)) * Math.sin(decl)) / (Math.cos(rad(LAT)) * Math.cos(decl));
+    return deg(Math.acos(Math.max(-1, Math.min(1, c)))) / 15;
+  }
+  /* y, m (0-11), d -> dakika cinsinden altı vakit */
+  function dayTimes(y, m, d) {
+    var jd = jdOf(y, m + 1, d) + 0.5 - TZ / 24;
+    var s = sun(jd);
+    var noon = 12 + TZ - LON / 15 - s.eqt;
+    var asrAlt = deg(Math.atan(1 / (1 + Math.tan(Math.abs(rad(LAT) - s.decl)))));
+    var t = [
+      noon - ha(-18, s.decl),
+      noon - ha(-0.833, s.decl),
+      noon,
+      noon + ha(asrAlt, s.decl),
+      noon + ha(-0.833, s.decl),
+      noon + ha(-17, s.decl)
+    ];
+    return t.map(function (h, i) { return Math.round(h * 60 + OFF[KEYS[i]]); });
+  }
+
+  function pad(n) { return n < 10 ? "0" + n : "" + n; }
+  function hm(min) { return pad(Math.floor(min / 60)) + ":" + pad(min % 60); }
+
+  /* İstanbul duvar saati: UTC alanlarıyla okunur */
+  function wallNow() { return Date.now() + TZ * 3600000; }
+
+  /* Olay zinciri: dün, bugün, yarın */
+  function timeline(w) {
+    var d = new Date(w), ev = [];
+    for (var off = -1; off <= 1; off++) {
+      var base = Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate() + off);
+      var bd = new Date(base);
+      var tm = dayTimes(bd.getUTCFullYear(), bd.getUTCMonth(), bd.getUTCDate());
+      for (var i = 0; i < 6; i++) ev.push({ at: base + tm[i] * 60000, i: i, day: off, min: tm[i] });
+    }
+    return ev;
+  }
+
+  var els = {
+    clock: document.getElementById("clock"),
+    date: document.getElementById("date"),
+    hijri: document.getElementById("hijri"),
+    nowLabel: document.getElementById("nowLabel"),
+    until: document.getElementById("until"),
+    count: document.getElementById("count"),
+    fill: document.getElementById("fill"),
+    bar: document.getElementById("bar"),
+    rFrom: document.getElementById("rFrom"),
+    rTo: document.getElementById("rTo"),
+    cards: document.getElementById("cards")
+  };
+
+  function renderDate(w) {
+    var d = new Date(w);
+    els.date.textContent = DAYS[d.getUTCDay()] + ", " + d.getUTCDate() + " " + MONTHS[d.getUTCMonth()] + " " + d.getUTCFullYear();
+    try {
+      var parts = new Intl.DateTimeFormat("en-u-ca-islamic-umalqura", { day: "numeric", month: "numeric", year: "numeric", timeZone: "UTC" }).formatToParts(d);
+      var o = {};
+      parts.forEach(function (p) { o[p.type] = p.value; });
+      els.hijri.textContent = o.day + " " + HIJRI[parseInt(o.month, 10) - 1] + " " + parseInt(o.year, 10);
+    } catch (e) { els.hijri.textContent = ""; }
+  }
+
+  var shownKey = "";
+  function renderCards(w, nextEv) {
+    var d = new Date(w);
+    var tm = dayTimes(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate());
+    var nowMin = Math.floor((w % 86400000) / 60000);
+    var nextIdx = nextEv.day === 0 ? nextEv.i : (nextEv.day > 0 ? 0 : -1);
+    var key = d.getUTCDate() + ":" + nextIdx;
+    if (key === shownKey) return;
+    shownKey = key;
+    els.cards.innerHTML = KEYS.map(function (k, i) {
+      var cls = "card" + (i === nextIdx ? " is-next" : (tm[i] < nowMin ? " passed" : ""));
+      return '<div class="' + cls + '">' +
+        (i === nextIdx ? '<span class="badge">Sıradaki</span>' : "") +
+        '<div class="row"><span class="name">' + NAMES[i] + '</span><span class="ico" aria-hidden="true">' + ICONS[k] + "</span></div>" +
+        '<p class="t">' + hm(tm[i]) + "</p></div>";
+    }).join("");
+  }
+
+  function tick() {
+    var w = wallNow();
+    var sod = Math.floor((w % 86400000) / 1000);
+    els.clock.textContent = pad(Math.floor(sod / 3600)) + ":" + pad(Math.floor(sod / 60) % 60) + ":" + pad(sod % 60);
+
+    var ev = timeline(w), n = 0;
+    while (n < ev.length && ev[n].at <= w) n++;
+    var next = ev[n], prev = ev[n - 1];
+    var left = Math.max(0, Math.ceil((next.at - w) / 1000));
+    els.count.textContent = pad(Math.floor(left / 3600)) + ":" + pad(Math.floor(left / 60) % 60) + ":" + pad(left % 60);
+    els.until.textContent = NAMES[next.i] + " Vaktine Kalan";
+    els.nowLabel.textContent = NAMES[prev.i] + " Vaktindeyiz";
+    var pct = Math.max(0, Math.min(100, (w - prev.at) / (next.at - prev.at) * 100));
+    els.fill.style.width = pct.toFixed(2) + "%";
+    els.bar.setAttribute("aria-valuenow", Math.round(pct));
+    els.rFrom.innerHTML = NAMES[prev.i] + " · <b>" + hm(prev.min) + "</b>";
+    els.rTo.innerHTML = NAMES[next.i] + " · <b>" + hm(next.min) + "</b>";
+    renderDate(w);
+    renderCards(w, next);
+  }
+
+  /* Aylık takvim */
+  var vy, vm;
+  function renderMonth() {
+    var w = new Date(wallNow());
+    var ty = w.getUTCFullYear(), tmn = w.getUTCMonth(), td = w.getUTCDate();
+    document.getElementById("monthTitle").textContent = MONTHS[vm] + " " + vy;
+    var days = new Date(Date.UTC(vy, vm + 1, 0)).getUTCDate();
+    var html = "";
+    for (var d = 1; d <= days; d++) {
+      var wd = new Date(Date.UTC(vy, vm, d)).getUTCDay();
+      var t = dayTimes(vy, vm, d);
+      var cls = (vy === ty && vm === tmn && d === td ? "today" : "") + (wd === 5 ? " fri" : "");
+      html += '<tr class="' + cls.trim() + '"><td>' + d + "<small>" + DAYS_S[wd] + "</small></td>" +
+        t.map(function (x) { return "<td>" + hm(x) + "</td>"; }).join("") + "</tr>";
+    }
+    document.getElementById("rows").innerHTML = html;
+  }
+  document.getElementById("prev").addEventListener("click", function () { vm--; if (vm < 0) { vm = 11; vy--; } renderMonth(); });
+  document.getElementById("next").addEventListener("click", function () { vm++; if (vm > 11) { vm = 0; vy++; } renderMonth(); });
+
+  /* Sekmeler */
+  var tabToday = document.getElementById("tab-today"), tabMonth = document.getElementById("tab-month");
+  var pToday = document.getElementById("panel-today"), pMonth = document.getElementById("panel-month");
+  function show(which) {
+    var m = which === "aylik";
+    tabToday.setAttribute("aria-selected", String(!m));
+    tabMonth.setAttribute("aria-selected", String(m));
+    pToday.hidden = m;
+    pMonth.hidden = !m;
+    if (m) {
+      var w = new Date(wallNow());
+      if (vy === undefined) { vy = w.getUTCFullYear(); vm = w.getUTCMonth(); }
+      renderMonth();
+    }
+  }
+  tabToday.addEventListener("click", function () { location.hash = "bugun"; show("bugun"); });
+  tabMonth.addEventListener("click", function () { location.hash = "aylik"; show("aylik"); });
+  window.addEventListener("hashchange", function () { show(location.hash === "#aylik" ? "aylik" : "bugun"); });
+
+  tick();
+  show(location.hash === "#aylik" ? "aylik" : "bugun");
+  setInterval(tick, 1000);
+})();
+</script>
+
+</body></html>

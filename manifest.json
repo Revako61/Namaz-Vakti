@@ -1,0 +1,13 @@
+{
+  "background_color": "#ffffff",
+  "dir": "ltr",
+  "display": "standalone",
+  "name": "Namaz Vakti",
+  "orientation": "any",
+  "scope": "/",
+  "short_name": "Namaz Vakti",
+  "start_url": "/",
+  "theme_color": "#ffffff",
+  "description": "Günlük namaz vakitlerini takip edebileceğiniz pratik uygulama",
+  "id": "/Namaz-Vakti/"
+}

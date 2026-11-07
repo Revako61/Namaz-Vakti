@@ -4,10 +4,9 @@
   "display": "standalone",
   "name": "Namaz Vakti",
   "orientation": "any",
-  "scope": "/",
+  "scope": "./",
   "short_name": "Namaz Vakti",
-  "start_url": "/",
+  "start_url": "./index.html",
   "theme_color": "#ffffff",
-  "description": "Günlük namaz vakitlerini takip edebileceğiniz pratik uygulama",
-  "id": "/Namaz-Vakti/"
+  "description": "Günlük namaz vakitlerini takip uygulaması"
 }

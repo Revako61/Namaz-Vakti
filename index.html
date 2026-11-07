@@ -85,6 +85,64 @@ button { font: inherit; color: inherit; }
   font-size: 11.5px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase;
 }
 .loc-pill svg { flex: none; }
+button.loc-pill { border: 0; color: var(--fg); font-family: var(--font-body); cursor: pointer; min-width: 0; max-width: 100%; transition: background .15s; }
+button.loc-pill:hover { background: var(--line); }
+.loc-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.loc-pill .chev { opacity: .6; transition: transform .2s; }
+.loc-pill[aria-expanded="true"] .chev { transform: rotate(180deg); }
+.bar-in > * { min-width: 0; }
+
+/* İlçe seçici */
+.picker { position: fixed; inset: 0; z-index: 50; display: flex; align-items: center; justify-content: center;
+  padding: max(24px, env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px)) max(24px, env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)); }
+.picker[hidden] { display: none; }
+.picker-backdrop { position: absolute; inset: 0; background: rgba(8, 20, 15, .55); backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px); }
+.picker-panel { position: relative; width: min(580px, 100%); max-height: 100%; display: flex; flex-direction: column;
+  background: var(--bg); border: 1px solid var(--line); border-radius: 26px; overflow: hidden;
+  box-shadow: 0 30px 70px -20px rgba(0, 0, 0, .5); }
+.picker-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; padding: 22px 22px 14px; }
+.picker-head h2 { font-family: var(--font-display); font-weight: 500; font-size: 26px; line-height: 1.1; margin: 0; }
+.picker-head p { margin: 5px 0 0; color: var(--muted); font-size: 13.5px; }
+.x { flex: none; width: 38px; height: 38px; border-radius: 12px; border: 1px solid var(--line); background: var(--surface); color: var(--fg); cursor: pointer; display: grid; place-items: center; }
+.x:hover { border-color: var(--muted); }
+.search { display: flex; align-items: center; gap: 10px; margin: 0 22px 6px; padding: 0 14px; height: 46px;
+  border: 1px solid var(--line); background: var(--surface); border-radius: 14px; color: var(--muted); }
+.search:focus-within { outline: 2px solid var(--gold); outline-offset: 2px; }
+.search input { flex: 1; min-width: 0; border: 0; background: transparent; font: inherit; font-size: 16px; color: var(--fg); outline: none; }
+.search input:focus-visible { outline: none; }
+.search input::placeholder { color: var(--muted); }
+.picker-body { position: relative; flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; padding: 4px 22px 24px; }
+.grp { margin-top: 16px; }
+.grp h3 { display: flex; justify-content: space-between; align-items: baseline; margin: 0 0 10px;
+  font-size: 11.5px; font-weight: 600; letter-spacing: .15em; text-transform: uppercase; color: var(--muted); }
+.grp .cnt { font-family: var(--font-mono); letter-spacing: .04em; font-weight: 400; }
+.opts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.opt { display: flex; align-items: center; justify-content: space-between; gap: 6px; min-width: 0; text-align: left;
+  padding: 11px 13px; border-radius: 14px; border: 1px solid var(--line); background: var(--surface);
+  color: var(--fg); font: inherit; font-size: 14px; cursor: pointer; }
+.opt .n { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.opt:hover { border-color: var(--muted); }
+.opt[aria-current="true"] { background: var(--green); border-color: var(--green); color: var(--on-green); font-weight: 600; }
+.opt .ok { flex: none; color: var(--gold); }
+.none { color: var(--muted); text-align: center; padding: 34px 0 10px; margin: 0; }
+.mt-loc { display: block; margin-top: 3px; font-family: var(--font-body); font-size: 13px; color: var(--muted); }
+@media (prefers-reduced-motion: no-preference) {
+  .picker-backdrop { animation: pk-fade .18s ease-out; }
+  .picker-panel { animation: pk-rise .24s cubic-bezier(.2, .7, .2, 1); }
+  @keyframes pk-fade { from { opacity: 0; } }
+  @keyframes pk-rise { from { opacity: 0; transform: translateY(14px) scale(.985); } }
+  @keyframes pk-sheet { from { transform: translateY(40px); opacity: 0; } }
+}
+@media (max-width: 560px) {
+  .picker { align-items: flex-end; padding: 0; }
+  .picker-panel { width: 100%; max-height: 88vh; max-height: 88dvh; border-radius: 26px 26px 0 0; border-bottom: 0;
+    padding-bottom: env(safe-area-inset-bottom, 0px); }
+  @media (prefers-reduced-motion: no-preference) { .picker-panel { animation: pk-sheet .26s cubic-bezier(.2, .7, .2, 1); } }
+  .picker-head { padding: 20px max(18px, env(safe-area-inset-right, 0px)) 12px max(18px, env(safe-area-inset-left, 0px)); }
+  .search { margin-left: max(18px, env(safe-area-inset-left, 0px)); margin-right: max(18px, env(safe-area-inset-right, 0px)); }
+  .picker-body { padding-left: max(18px, env(safe-area-inset-left, 0px)); padding-right: max(18px, env(safe-area-inset-right, 0px)); }
+  .opts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
 .clock { font-family: var(--font-mono); font-size: 14px; color: var(--muted); letter-spacing: .04em; font-variant-numeric: tabular-nums; }
 
 /* Sayfa */
@@ -198,10 +256,11 @@ tr.fri td:first-child small { color: var(--gold); }
 
 <header class="bar">
   <div class="bar-in">
-    <span class="loc-pill">
+    <button type="button" class="loc-pill" id="locBtn" aria-haspopup="dialog" aria-expanded="false" title="İlçe değiştir">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
-      Sarıyer, İstanbul
-    </span>
+      <span class="loc-name" id="locName">Sarıyer, İstanbul</span>
+      <svg class="chev" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+    </button>
     <span class="clock" id="clock" aria-label="Şu anki saat">--:--:--</span>
   </div>
 </header>
@@ -212,7 +271,7 @@ tr.fri td:first-child small { color: var(--gold); }
       <h1>Namaz Vakitleri</h1>
       <div class="sub">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
-        Sarıyer, İstanbul
+        <span id="subLoc">Sarıyer, İstanbul</span>
       </div>
     </div>
     <div class="head-r">
@@ -303,18 +362,60 @@ tr.fri td:first-child small { color: var(--gold); }
     </div>
   </section>
 
-  <p class="note">Vakitler Sarıyer koordinatlarına (41,17° K · 29,05° D) göre hesaplanır, saat dilimi UTC+3. Diyanet takvimiyle bir iki dakikalık fark çıkabilir.</p>
+  <p class="note" id="note">Kasım 2026 vakitleri Aladhan servisinden (Diyanet yöntemi, Sarıyer koordinatları) alınmıştır. Diğer aylar aynı koordinatlara göre hesaplanır ve bir iki dakika sapabilir. Saat dilimi UTC+3.</p>
 </main>
+
+<div class="picker" id="picker" hidden>
+  <div class="picker-backdrop" id="pickBackdrop"></div>
+  <div class="picker-panel" role="dialog" aria-modal="true" aria-labelledby="pickTitle">
+    <div class="picker-head">
+      <div>
+        <h2 id="pickTitle">İlçe seç</h2>
+        <p>İstanbul · 39 ilçe</p>
+      </div>
+      <button type="button" class="x" id="pickClose" aria-label="Kapat">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <label class="search" for="pickSearch">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input id="pickSearch" type="search" placeholder="İlçe ara" autocomplete="off" enterkeyhint="search" aria-label="İlçe ara">
+    </label>
+    <div class="picker-body" id="pickBody"></div>
+  </div>
+</div>
 
 <script>
 (function () {
-  var LAT = 41.17, LON = 29.05, TZ = 3;
+  var TZ = 3;
   var NAMES = ["İmsak", "Güneş", "Öğle", "İkindi", "Akşam", "Yatsı"];
   var KEYS = ["imsak", "gunes", "ogle", "ikindi", "aksam", "yatsi"];
   var OFF = { imsak: 0.12, gunes: -6.86, ogle: 4.59, ikindi: 4.88, aksam: 7.03, yatsi: -0.6 };
+  /* Aladhan (Diyanet yöntemi, Sarıyer) — dakika cinsinden: İmsak, Güneş, Öğle, İkindi, Akşam, Yatsı */
+  var DATA = {"2026-11": [[361,448,772,941,1086,1167],[362,449,772,940,1085,1166],[363,450,772,939,1084,1165],[365,451,772,938,1083,1164],[366,452,772,937,1082,1163],[367,454,772,936,1081,1162],[368,455,772,935,1080,1161],[369,456,773,934,1078,1160],[370,457,773,933,1077,1160],[371,458,773,932,1076,1159],[372,460,773,932,1075,1158],[373,461,773,931,1075,1157],[374,462,773,930,1074,1156],[375,463,773,929,1073,1156],[376,464,773,929,1072,1155],[377,466,774,928,1071,1154],[378,467,774,927,1070,1154],[379,468,774,927,1069,1153],[380,469,774,926,1069,1153],[381,470,774,926,1068,1152],[382,471,775,925,1067,1151],[383,473,775,925,1067,1151],[384,474,775,924,1066,1151],[385,475,775,924,1066,1150],[386,476,776,923,1065,1150],[387,477,776,923,1065,1150],[388,478,776,923,1064,1149],[389,479,777,922,1064,1149],[390,480,777,922,1063,1149],[391,481,777,922,1063,1149]]};
   var DAYS = ["Pazar", "Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi"];
   var DAYS_S = ["Paz", "Pzt", "Sal", "Çar", "Per", "Cum", "Cmt"];
   var MONTHS = ["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"];
+
+  /* İstanbul'un 39 ilçesi: ad, yaka (A Avrupa, N Anadolu), enlem, boylam */
+  var DISTRICTS = [
+    ["Adalar", "N", 40.876, 29.091], ["Arnavutköy", "A", 41.185, 28.739], ["Ataşehir", "N", 40.992, 29.124],
+    ["Avcılar", "A", 40.979, 28.721], ["Bağcılar", "A", 41.039, 28.857], ["Bahçelievler", "A", 41.002, 28.860],
+    ["Bakırköy", "A", 40.982, 28.877], ["Başakşehir", "A", 41.093, 28.803], ["Bayrampaşa", "A", 41.035, 28.913],
+    ["Beşiktaş", "A", 41.042, 29.007], ["Beykoz", "N", 41.120, 29.101], ["Beylikdüzü", "A", 41.002, 28.642],
+    ["Beyoğlu", "A", 41.037, 28.977], ["Büyükçekmece", "A", 41.021, 28.585], ["Çatalca", "A", 41.143, 28.462],
+    ["Çekmeköy", "N", 41.033, 29.175], ["Esenler", "A", 41.044, 28.877], ["Esenyurt", "A", 41.034, 28.680],
+    ["Eyüpsultan", "A", 41.048, 28.934], ["Fatih", "A", 41.019, 28.940], ["Gaziosmanpaşa", "A", 41.064, 28.915],
+    ["Güngören", "A", 41.022, 28.873], ["Kadıköy", "N", 40.991, 29.027], ["Kağıthane", "A", 41.080, 28.971],
+    ["Kartal", "N", 40.906, 29.186], ["Küçükçekmece", "A", 41.000, 28.780], ["Maltepe", "N", 40.935, 29.131],
+    ["Pendik", "N", 40.876, 29.233], ["Sancaktepe", "N", 41.002, 29.231], ["Sarıyer", "A", 41.170, 29.050],
+    ["Silivri", "A", 41.074, 28.248], ["Sultanbeyli", "N", 40.966, 29.262], ["Sultangazi", "A", 41.107, 28.869],
+    ["Şile", "N", 41.175, 29.613], ["Şişli", "A", 41.060, 28.987], ["Tuzla", "N", 40.816, 29.300],
+    ["Ümraniye", "N", 41.017, 29.124], ["Üsküdar", "N", 41.023, 29.015], ["Zeytinburnu", "A", 40.988, 28.907]
+  ].map(function (r) { return { name: r[0], side: r[1], lat: r[2], lon: r[3] }; })
+    .sort(function (a, b) { return a.name.localeCompare(b.name, "tr"); });
+  var HOME = DISTRICTS.filter(function (x) { return x.name === "Sarıyer"; })[0];
+  var cur = HOME;
   var HIJRI = ["Muharrem", "Safer", "Rebiülevvel", "Rebiülahir", "Cemaziyelevvel", "Cemaziyelahir", "Recep", "Şaban", "Ramazan", "Şevval", "Zilkade", "Zilhicce"];
 
   var ICONS = {
@@ -346,25 +447,37 @@ tr.fri td:first-child small { color: var(--gold); }
     eqt = ((eqt + 12) % 24 + 24) % 24 - 12;
     return { decl: Math.asin(Math.sin(e) * Math.sin(L)), eqt: eqt };
   }
-  function ha(alt, decl) {
-    var c = (Math.sin(rad(alt)) - Math.sin(rad(LAT)) * Math.sin(decl)) / (Math.cos(rad(LAT)) * Math.cos(decl));
+  function ha(lat, alt, decl) {
+    var c = (Math.sin(rad(alt)) - Math.sin(rad(lat)) * Math.sin(decl)) / (Math.cos(rad(lat)) * Math.cos(decl));
     return deg(Math.acos(Math.max(-1, Math.min(1, c)))) / 15;
   }
-  /* y, m (0-11), d -> dakika cinsinden altı vakit */
-  function dayTimes(y, m, d) {
+  /* Bir konum için ham hesap: dakika (kesirli), altı vakit */
+  function calcRaw(y, m, d, lat, lon) {
     var jd = jdOf(y, m + 1, d) + 0.5 - TZ / 24;
     var s = sun(jd);
-    var noon = 12 + TZ - LON / 15 - s.eqt;
-    var asrAlt = deg(Math.atan(1 / (1 + Math.tan(Math.abs(rad(LAT) - s.decl)))));
-    var t = [
-      noon - ha(-18, s.decl),
-      noon - ha(-0.833, s.decl),
+    var noon = 12 + TZ - lon / 15 - s.eqt;
+    var asrAlt = deg(Math.atan(1 / (1 + Math.tan(Math.abs(rad(lat) - s.decl)))));
+    return [
+      noon - ha(lat, -18, s.decl),
+      noon - ha(lat, -0.833, s.decl),
       noon,
-      noon + ha(asrAlt, s.decl),
-      noon + ha(-0.833, s.decl),
-      noon + ha(-17, s.decl)
-    ];
-    return t.map(function (h, i) { return Math.round(h * 60 + OFF[KEYS[i]]); });
+      noon + ha(lat, asrAlt, s.decl),
+      noon + ha(lat, -0.833, s.decl),
+      noon + ha(lat, -17, s.decl)
+    ].map(function (x) { return x * 60; });
+  }
+  /* y, m (0-11), d -> dakika cinsinden altı vakit, seçili ilçe için.
+     Aladhan verisi olan günlerde Sarıyer verisine ilçenin koordinat farkı eklenir. */
+  function dayTimes(y, m, d) {
+    var pre = DATA[y + "-" + (m + 1 < 10 ? "0" : "") + (m + 1)];
+    var row = pre && pre[d - 1];
+    if (row) {
+      if (cur === HOME) return row.slice();
+      var a = calcRaw(y, m, d, cur.lat, cur.lon), b = calcRaw(y, m, d, HOME.lat, HOME.lon);
+      return row.map(function (v, i) { return Math.round(v + a[i] - b[i]); });
+    }
+    var r = calcRaw(y, m, d, cur.lat, cur.lon);
+    return r.map(function (v, i) { return Math.round(v + OFF[KEYS[i]]); });
   }
 
   function pad(n) { return n < 10 ? "0" + n : "" + n; }
@@ -454,7 +567,7 @@ tr.fri td:first-child small { color: var(--gold); }
   function renderMonth() {
     var w = new Date(wallNow());
     var ty = w.getUTCFullYear(), tmn = w.getUTCMonth(), td = w.getUTCDate();
-    document.getElementById("monthTitle").textContent = MONTHS[vm] + " " + vy;
+    document.getElementById("monthTitle").innerHTML = MONTHS[vm] + " " + vy + '<small class="mt-loc">' + cur.name + ", İstanbul</small>";
     var days = new Date(Date.UTC(vy, vm + 1, 0)).getUTCDate();
     var html = "";
     for (var d = 1; d <= days; d++) {
@@ -488,7 +601,101 @@ tr.fri td:first-child small { color: var(--gold); }
   tabMonth.addEventListener("click", function () { location.hash = "aylik"; show("aylik"); });
   window.addEventListener("hashchange", function () { show(location.hash === "#aylik" ? "aylik" : "bugun"); });
 
-  tick();
+  /* İlçe seçici */
+  var picker = document.getElementById("picker"), pickBody = document.getElementById("pickBody");
+  var pickSearch = document.getElementById("pickSearch"), locBtn = document.getElementById("locBtn");
+  var locName = document.getElementById("locName"), subLoc = document.getElementById("subLoc"), noteEl = document.getElementById("note");
+  var lastFocus = null;
+  var CHECK = '<svg class="ok" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5 9-10"/></svg>';
+
+  function fold(s) {
+    return s.toLocaleLowerCase("tr").replace(/ı/g, "i").replace(/ş/g, "s").replace(/ğ/g, "g")
+      .replace(/ü/g, "u").replace(/ö/g, "o").replace(/ç/g, "c");
+  }
+  function buildPicker(q) {
+    q = fold((q || "").trim());
+    var html = "";
+    [["A", "Avrupa Yakası"], ["N", "Anadolu Yakası"]].forEach(function (g) {
+      var list = DISTRICTS.filter(function (x) { return x.side === g[0] && (!q || fold(x.name).indexOf(q) !== -1); });
+      if (!list.length) return;
+      html += '<section class="grp"><h3><span>' + g[1] + '</span><span class="cnt">' + list.length + '</span></h3><div class="opts">' +
+        list.map(function (x) {
+          var on = x === cur;
+          return '<button type="button" class="opt" data-name="' + x.name + '"' + (on ? ' aria-current="true"' : "") + '><span class="n">' + x.name + "</span>" + (on ? CHECK : "") + "</button>";
+        }).join("") + "</div></section>";
+    });
+    pickBody.innerHTML = html || '<p class="none">Eşleşen ilçe bulunamadı.</p>';
+  }
+  function noteText() {
+    if (cur === HOME) return "Kasım 2026 vakitleri Aladhan servisinden (Diyanet yöntemi, Sarıyer koordinatları) alınmıştır. Diğer aylar aynı koordinatlara göre hesaplanır ve bir iki dakika sapabilir. Saat dilimi UTC+3.";
+    return "Kasım 2026 için Aladhan servisinin (Diyanet yöntemi) Sarıyer verisi temel alınır, " + cur.name + " koordinatlarındaki fark eklenir. Diğer aylar tamamen hesaplanır. Resmi takvimle birkaç dakika fark çıkabilir. Saat dilimi UTC+3.";
+  }
+  function applyLocation() {
+    var label = cur.name + ", İstanbul";
+    locName.textContent = label;
+    subLoc.textContent = label;
+    noteEl.textContent = noteText();
+    shownKey = "";
+    tick();
+    if (!pMonth.hidden) renderMonth();
+  }
+  function openPicker() {
+    lastFocus = document.activeElement;
+    pickSearch.value = "";
+    buildPicker("");
+    picker.hidden = false;
+    locBtn.setAttribute("aria-expanded", "true");
+    document.body.style.overflow = "hidden";
+    var on = pickBody.querySelector('[aria-current="true"]');
+    if (on) {
+      pickBody.scrollTop = Math.max(0, on.offsetTop - pickBody.clientHeight / 2 + on.offsetHeight / 2);
+      on.focus({ preventScroll: true });
+    } else { pickSearch.focus(); }
+  }
+  function closePicker() {
+    picker.hidden = true;
+    locBtn.setAttribute("aria-expanded", "false");
+    document.body.style.overflow = "";
+    if (lastFocus && lastFocus.focus) lastFocus.focus();
+  }
+  function choose(name) {
+    var d = DISTRICTS.filter(function (x) { return x.name === name; })[0];
+    if (!d) return;
+    cur = d;
+    try { localStorage.setItem("namaz-ilce", d.name); } catch (e) {}
+    applyLocation();
+    closePicker();
+  }
+  locBtn.addEventListener("click", openPicker);
+  document.getElementById("pickClose").addEventListener("click", closePicker);
+  document.getElementById("pickBackdrop").addEventListener("click", closePicker);
+  pickSearch.addEventListener("input", function () { buildPicker(pickSearch.value); });
+  pickBody.addEventListener("click", function (e) {
+    var b = e.target.closest ? e.target.closest(".opt") : null;
+    if (b) choose(b.getAttribute("data-name"));
+  });
+  picker.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") { e.preventDefault(); closePicker(); return; }
+    if (e.key === "Enter" && e.target === pickSearch) {
+      var first = pickBody.querySelector(".opt");
+      if (first) { e.preventDefault(); choose(first.getAttribute("data-name")); }
+      return;
+    }
+    if (e.key === "Tab") {
+      var f = picker.querySelectorAll("button, input");
+      if (!f.length) return;
+      var first2 = f[0], last = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === first2) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first2.focus(); }
+    }
+  });
+  try {
+    var saved = localStorage.getItem("namaz-ilce");
+    var found = DISTRICTS.filter(function (x) { return x.name === saved; })[0];
+    if (found) cur = found;
+  } catch (e) {}
+
+  applyLocation();
   show(location.hash === "#aylik" ? "aylik" : "bugun");
   setInterval(tick, 1000);
 })();

@@ -4,6 +4,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&family=Lora:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Amiri+Quran&display=swap">
 <style>
 /* Layout: ince üst şerit, ortalanmış tek sütun; koyu yeşil geri sayım kartı sayfanın tek vurgusu, vakit kartları sakin kalır. */
 :root {
@@ -22,6 +23,9 @@
   --font-display: "Lora", Georgia, "Times New Roman", serif;
   --font-body: "DM Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  --font-ar: "Amiri Quran", "Amiri", "Scheherazade New", "Noto Naskh Arabic", "Traditional Arabic", serif;
+  --gold-ink: #8f6200;
+  --star: polygon(50.0% 0.0%, 64.6% 14.6%, 85.4% 14.6%, 85.4% 35.4%, 100.0% 50.0%, 85.4% 64.6%, 85.4% 85.4%, 64.6% 85.4%, 50.0% 100.0%, 35.4% 85.4%, 14.6% 85.4%, 14.6% 64.6%, 0.0% 50.0%, 14.6% 35.4%, 14.6% 14.6%, 35.4% 14.6%);
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
@@ -37,6 +41,7 @@
     --on-green-dim: #aebdb6;
     --gold: #e9b235;
     --pill: #222925;
+    --gold-ink: #e9b235;
     color-scheme: dark;
   }
 }
@@ -53,6 +58,7 @@
   --on-green-dim: #aebdb6;
   --gold: #e9b235;
   --pill: #222925;
+    --gold-ink: #e9b235;
   color-scheme: dark;
 }
 
@@ -196,7 +202,7 @@ h1 { font-family: var(--font-display); font-weight: 500; font-size: clamp(32px, 
 .range b { font-family: var(--font-mono); font-weight: 400; letter-spacing: .03em; }
 
 /* Sekmeler */
-.tabs { display: grid; grid-template-columns: 1fr 1fr; margin: 30px 0 18px; }
+.tabs { display: grid; grid-template-columns: repeat(3, 1fr); margin: 30px 0 18px; }
 .tab { background: none; border: 0; border-bottom: 1px solid var(--line); padding: 10px 0 12px; font-size: 14.5px; color: var(--muted); cursor: pointer; text-align: center; margin: 0 4px; }
 .tab[aria-selected="true"] { color: var(--fg); border-bottom: 2px solid var(--fg); margin-bottom: -1px; font-weight: 500; }
 .tab:first-child { margin-left: 0; }
@@ -252,6 +258,109 @@ tr.fri td:first-child small { color: var(--gold); }
   .card .t { font-size: 25px; }
 }
 @media (prefers-reduced-motion: reduce) { .fill { transition: none; } }
+
+/* Sabit üst bant (telefon güvenli alanı) */
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 40; background: var(--bg); }
+
+/* Ortak parçalar */
+.badge8 { flex: none; width: 40px; height: 40px; display: grid; place-items: center; background: var(--pill); color: var(--fg);
+  clip-path: var(--star); font-family: var(--font-mono); font-size: 12px; font-variant-numeric: tabular-nums; letter-spacing: -.02em; }
+.ib { min-width: 38px; height: 38px; padding: 0 10px; border-radius: 12px; border: 1px solid var(--line); background: var(--surface);
+  color: var(--fg); font: inherit; font-size: 14px; cursor: pointer; display: inline-grid; place-items: center; }
+.ib:hover { border-color: var(--muted); }
+.ib:disabled { opacity: .4; cursor: default; }
+.ib[aria-pressed="true"] { background: var(--green); border-color: var(--green); color: var(--on-green); }
+.pillbtn { display: inline-flex; align-items: center; gap: 6px; padding: 7px 14px; border-radius: 999px; border: 1px solid var(--line);
+  background: transparent; color: var(--fg); font: inherit; font-size: 13px; cursor: pointer; text-decoration: none; }
+.pillbtn:hover { border-color: var(--muted); }
+.linkbtn { background: none; border: 0; padding: 6px 0 0; color: var(--gold-ink); font: inherit; font-size: 13px; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+
+/* Saatin ayeti */
+.verse { position: relative; overflow: hidden; margin-top: 18px; padding: 20px 22px 18px; background: var(--surface); border: 1px solid var(--line); border-radius: 22px; }
+.verse .lbl { display: flex; align-items: center; gap: 9px; }
+.verse .lbl::before { content: ""; flex: none; width: 15px; height: 15px; background: var(--gold-ink); clip-path: var(--star); }
+.verse-top { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+.lbl { margin: 0; font-size: 11.5px; font-weight: 600; letter-spacing: .15em; text-transform: uppercase; color: var(--muted); }
+.verse-next { font-family: var(--font-mono); font-size: 12px; color: var(--muted); }
+.v-ar { margin: 14px 0 10px; font-family: var(--font-ar); font-size: clamp(25px, 5.4vw, 31px); line-height: 2.05; text-align: right; }
+.v-tr { margin: 0; font-family: var(--font-display); font-size: 17px; line-height: 1.6; text-wrap: pretty; }
+.verse.is-long:not(.open) .v-ar { max-height: 6.4em; overflow: hidden; -webkit-mask-image: linear-gradient(#000 55%, transparent); mask-image: linear-gradient(#000 55%, transparent); }
+.verse.is-long:not(.open) .v-tr { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.v-foot { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 14px; }
+.v-ref { font-size: 13px; color: var(--muted); }
+.v-act { display: flex; gap: 8px; flex-wrap: wrap; }
+
+/* Kuran: liste */
+.q-top { display: flex; flex-direction: column; gap: 12px; margin-bottom: 16px; }
+.q-search { margin: 0; }
+.q-top.juz .q-search { display: none; }
+.seg { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; padding: 4px; background: var(--pill); border-radius: 14px; }
+.seg button { border: 0; background: transparent; padding: 9px 0; border-radius: 10px; font: inherit; font-size: 14px; color: var(--muted); cursor: pointer; }
+.seg button[aria-selected="true"] { background: var(--surface); color: var(--fg); font-weight: 500; box-shadow: 0 1px 2px rgba(0, 0, 0, .1); }
+.resume { display: flex; justify-content: space-between; align-items: center; gap: 14px; width: 100%; margin-bottom: 14px; padding: 16px 18px;
+  text-align: left; background: var(--green); color: var(--on-green); border: 0; border-radius: 20px; font: inherit; cursor: pointer; }
+.resume small { display: block; margin-bottom: 4px; font-size: 11.5px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--on-green-dim); }
+.resume b { font-family: var(--font-display); font-weight: 500; font-size: 20px; }
+.resume .go { flex: none; color: var(--gold); font-size: 14px; font-weight: 500; }
+.marks { margin-bottom: 14px; background: var(--surface); border: 1px solid var(--line); border-radius: 18px; }
+.marks summary { display: flex; justify-content: space-between; align-items: center; padding: 14px 18px; font-size: 14px; cursor: pointer; list-style: none; }
+.marks summary::-webkit-details-marker { display: none; }
+.marks[open] summary { border-bottom: 1px solid var(--line); }
+.marks .cnt, .grp .cnt { font-family: var(--font-mono); font-size: 12px; color: var(--muted); }
+.mrow { display: flex; align-items: center; gap: 6px; padding: 4px 8px 4px 6px; border-bottom: 1px solid var(--line); }
+.mrow:last-child { border-bottom: 0; }
+.mrow .mopen { flex: 1; min-width: 0; padding: 8px 10px; text-align: left; background: none; border: 0; color: var(--fg); font: inherit; font-size: 14px; cursor: pointer; border-radius: 10px; }
+.mrow .mopen small { display: block; color: var(--muted); font-size: 12.5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.rows { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.srow { display: flex; align-items: center; gap: 12px; min-width: 0; padding: 10px 14px; text-align: left; background: var(--surface);
+  border: 1px solid var(--line); border-radius: 16px; color: var(--fg); font: inherit; cursor: pointer; }
+.srow:hover { border-color: var(--muted); }
+.srow:hover .badge8 { background: var(--green); color: var(--on-green); }
+.srow-m { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.srow-m b { font-weight: 500; font-size: 15px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.srow-m small { color: var(--muted); font-size: 12.5px; }
+.srow-ar { flex: none; font-family: var(--font-ar); font-size: 21px; color: var(--time); line-height: 1.6; }
+.none { color: var(--muted); text-align: center; padding: 30px 0 10px; margin: 0; }
+
+/* Kuran: okuma */
+.r-bar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 30; display: flex; align-items: center; gap: 8px; padding: 10px 0; margin-bottom: 4px; background: var(--bg); border-bottom: 1px solid var(--line); }
+.r-title { flex: 1; min-width: 0; font-family: var(--font-display); font-size: 18px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.r-head { padding: 26px 0 8px; text-align: center; }
+.r-ar { font-family: var(--font-ar); font-size: clamp(34px, 8vw, 46px); line-height: 1.7; }
+.r-tr { margin: 0 0 6px; font-family: var(--font-display); font-weight: 500; font-size: 26px; }
+.r-meta { margin: 0; color: var(--muted); font-size: 13.5px; }
+.bism { margin: 18px 0 4px; font-family: var(--font-ar); font-size: calc(var(--ar-size, 30px) * 1.05); line-height: 2; text-align: center; color: var(--time); }
+.juz-div { display: flex; align-items: center; gap: 12px; margin: 28px 0 4px; color: var(--muted); font-size: 11.5px; font-weight: 600; letter-spacing: .15em; text-transform: uppercase; }
+.juz-div::before, .juz-div::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+.ay { padding: 18px 10px 4px; margin: 0 -10px; scroll-margin-top: 76px; border-radius: 14px; }
+.ay-h { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.ay-no { display: flex; align-items: center; gap: 10px; }
+.ay .badge8 { width: 34px; height: 34px; font-size: 11px; }
+.saj { font-size: 11px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--gold-ink); }
+.ay-act { display: flex; gap: 4px; }
+.ay-act .ib { min-width: 36px; height: 36px; padding: 0; border-color: transparent; background: transparent; color: var(--muted); }
+.ay-act .ib:hover { background: var(--pill); }
+.ay-act .ib[aria-pressed="true"] { background: transparent; border-color: transparent; color: var(--gold-ink); }
+.ay-act .ib[aria-pressed="true"] svg { fill: currentColor; }
+.ay-act .ib.done { color: var(--gold-ink); }
+.ay-ar { margin: 6px 0 2px; font-family: var(--font-ar); font-size: var(--ar-size, 30px); line-height: 2.2; text-align: right; }
+.mealblk { margin: 4px 0 6px; padding-bottom: 18px; border-bottom: 1px solid var(--line); font-size: 15.5px; line-height: 1.65; color: var(--time); text-wrap: pretty; }
+.mealblk .rng { display: block; margin-bottom: 4px; font-size: 11.5px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+.no-meal .mealblk { display: none; }
+.no-meal .ay { border-bottom: 1px solid var(--line); padding-bottom: 12px; border-radius: 0; }
+.ay.flash { background: rgba(233, 178, 53, .16); }
+.r-nav { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 26px; }
+.nv { display: flex; flex-direction: column; gap: 2px; padding: 12px 16px; background: var(--surface); border: 1px solid var(--line); border-radius: 16px; color: var(--fg); font: inherit; text-align: left; cursor: pointer; }
+.nv:last-child:not(:only-child) { text-align: right; }
+.nv:hover { border-color: var(--muted); }
+.nv small { font-size: 11.5px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+.nv b { font-family: var(--font-display); font-weight: 500; font-size: 17px; }
+
+@media (max-width: 520px) {
+  .rows { grid-template-columns: minmax(0, 1fr); }
+  .verse { padding: 18px 18px 16px; }
+}
+@media (prefers-reduced-motion: no-preference) { .ay.flash { transition: background 1.2s ease; } }
 </style>
 
 <header class="bar">
@@ -337,13 +446,31 @@ tr.fri td:first-child small { color: var(--gold); }
     <div class="range"><span id="rFrom">—</span><span id="rTo">—</span></div>
   </section>
 
-  <div class="tabs" role="tablist">
+  <div class="tabs" id="tabs" role="tablist">
     <button class="tab" role="tab" id="tab-today" aria-selected="true" aria-controls="panel-today">Bugün</button>
     <button class="tab" role="tab" id="tab-month" aria-selected="false" aria-controls="panel-month">Aylık Takvim</button>
+    <button class="tab" role="tab" id="tab-quran" aria-selected="false" aria-controls="panel-quran">Kuran</button>
   </div>
 
   <section id="panel-today" role="tabpanel" aria-labelledby="tab-today">
     <div class="cards" id="cards"></div>
+
+    <article class="verse" id="verse" aria-labelledby="verseLbl">
+      <div class="verse-top">
+        <h3 class="lbl" id="verseLbl">Saatin ayeti</h3>
+        <span class="verse-next" id="verseNext"></span>
+      </div>
+      <p class="v-ar" id="vAr" lang="ar" dir="rtl"></p>
+      <p class="v-tr" id="vTr"></p>
+      <button type="button" class="linkbtn" id="vMore" hidden aria-expanded="false">Tamamını göster</button>
+      <div class="v-foot">
+        <span class="v-ref" id="vRef"></span>
+        <div class="v-act">
+          <button type="button" class="pillbtn" id="vCopy">Kopyala</button>
+          <a class="pillbtn" id="vOpen" href="#kuran">Surede oku</a>
+        </div>
+      </div>
+    </article>
   </section>
 
   <section id="panel-month" role="tabpanel" aria-labelledby="tab-month" hidden>
@@ -360,6 +487,11 @@ tr.fri td:first-child small { color: var(--gold); }
         <tbody id="rows"></tbody>
       </table>
     </div>
+  </section>
+
+  <section id="panel-quran" role="tabpanel" aria-labelledby="tab-quran" hidden>
+    <div id="qList"></div>
+    <div id="qRead" hidden></div>
   </section>
 
   <p class="note" id="note">Kasım 2026 vakitleri Aladhan servisinden (Diyanet yöntemi, Sarıyer koordinatları) alınmıştır. Diğer aylar aynı koordinatlara göre hesaplanır ve bir iki dakika sapabilir. Saat dilimi UTC+3.</p>
@@ -384,6 +516,10 @@ tr.fri td:first-child small { color: var(--gold); }
     <div class="picker-body" id="pickBody"></div>
   </div>
 </div>
+
+<script>
+window.QDATA = {"meta":[["Fâtiha","ٱلْفَاتِحَةِ","سُورَةُ ٱلْفَاتِحَةِ","M",7],["Bakara","البَقَرَةِ","سُورَةُ البَقَرَةِ","D",286],["Âl-i İmrân","آلِ عِمۡرَانَ","سُورَةُ آلِ عِمۡرَانَ","D",200],["Nisâ","النِّسَاءِ","سُورَةُ النِّسَاءِ","D",176],["Mâide","المَائـِدَةِ","سُورَةُ المَائـِدَةِ","D",120],["En'âm","الأَنۡعَامِ","سُورَةُ الأَنۡعَامِ","M",165],["A'râf","الأَعۡرَافِ","سُورَةُ الأَعۡرَافِ","M",206],["Enfâl","الأَنفَالِ","سُورَةُ الأَنفَالِ","D",75],["Tevbe","التَّوۡبَةِ","سُورَةُ التَّوۡبَةِ","D",129],["Yûnus","يُونُسَ","سُورَةُ يُونُسَ","M",109],["Hûd","هُودٍ","سُورَةُ هُودٍ","M",123],["Yûsuf","يُوسُفَ","سُورَةُ يُوسُفَ","M",111],["Ra'd","الرَّعۡدِ","سُورَةُ الرَّعۡدِ","D",43],["İbrâhîm","إِبۡرَاهِيمَ","سُورَةُ إِبۡرَاهِيمَ","M",52],["Hicr","الحِجۡرِ","سُورَةُ الحِجۡرِ","M",99],["Nahl","النَّحۡلِ","سُورَةُ النَّحۡلِ","M",128],["İsrâ","الإِسۡرَاءِ","سُورَةُ الإِسۡرَاءِ","M",111],["Kehf","الكَهۡفِ","سُورَةُ الكَهۡفِ","M",110],["Meryem","مَرۡيَمَ","سُورَةُ مَرۡيَمَ","M",98],["Tâhâ","طه","سُورَةُ طه","M",135],["Enbiyâ","الأَنبِيَاءِ","سُورَةُ الأَنبِيَاءِ","M",112],["Hac","الحَجِّ","سُورَةُ الحَجِّ","D",78],["Mü'minûn","المُؤۡمِنُونَ","سُورَةُ المُؤۡمِنُونَ","M",118],["Nûr","النُّورِ","سُورَةُ النُّورِ","D",64],["Furkân","الفُرۡقَانِ","سُورَةُ الفُرۡقَانِ","M",77],["Şuarâ","الشُّعَرَاءِ","سُورَةُ الشُّعَرَاءِ","M",227],["Neml","النَّمۡلِ","سُورَةُ النَّمۡلِ","M",93],["Kasas","القَصَصِ","سُورَةُ القَصَصِ","M",88],["Ankebût","العَنكَبُوتِ","سُورَةُ العَنكَبُوتِ","M",69],["Rûm","الرُّومِ","سُورَةُ الرُّومِ","M",60],["Lokmân","لُقۡمَانَ","سُورَةُ لُقۡمَانَ","M",34],["Secde","السَّجۡدَةِ","سُورَةُ السَّجۡدَةِ","M",30],["Ahzâb","الأَحۡزَابِ","سُورَةُ الأَحۡزَابِ","D",73],["Sebe'","سَبَإٍ","سُورَةُ سَبَإٍ","M",54],["Fâtır","فَاطِرٍ","سُورَةُ فَاطِرٍ","M",45],["Yâsîn","يسٓ","سُورَةُ يسٓ","M",83],["Sâffât","الصَّافَّاتِ","سُورَةُ الصَّافَّاتِ","M",182],["Sâd","صٓ","سُورَةُ صٓ","M",88],["Zümer","الزُّمَرِ","سُورَةُ الزُّمَرِ","M",75],["Mü'min","غَافِرٍ","سُورَةُ غَافِرٍ","M",85],["Fussilet","فُصِّلَتۡ","سُورَةُ فُصِّلَتۡ","M",54],["Şûrâ","الشُّورَىٰ","سُورَةُ الشُّورَىٰ","M",53],["Zuhruf","الزُّخۡرُفِ","سُورَةُ الزُّخۡرُفِ","M",89],["Duhân","الدُّخَانِ","سُورَةُ الدُّخَانِ","M",59],["Câsiye","الجَاثِيَةِ","سُورَةُ الجَاثِيَةِ","M",37],["Ahkâf","الأَحۡقَافِ","سُورَةُ الأَحۡقَافِ","M",35],["Muhammed","مُحَمَّدٍ","سُورَةُ مُحَمَّدٍ","D",38],["Fetih","الفَتۡحِ","سُورَةُ الفَتۡحِ","D",29],["Hucurât","الحُجُرَاتِ","سُورَةُ الحُجُرَاتِ","D",18],["Kâf","قٓ","سُورَةُ قٓ","M",45],["Zâriyât","الذَّارِيَاتِ","سُورَةُ الذَّارِيَاتِ","M",60],["Tûr","الطُّورِ","سُورَةُ الطُّورِ","M",49],["Necm","النَّجۡمِ","سُورَةُ النَّجۡمِ","M",62],["Kamer","القَمَرِ","سُورَةُ القَمَرِ","M",55],["Rahmân","الرَّحۡمَٰن","سُورَةُ الرَّحۡمَٰن","D",78],["Vâkıa","الوَاقِعَةِ","سُورَةُ الوَاقِعَةِ","M",96],["Hadîd","الحَدِيدِ","سُورَةُ الحَدِيدِ","D",29],["Mücâdele","المُجَادلَةِ","سُورَةُ المُجَادلَةِ","D",22],["Haşr","الحَشۡرِ","سُورَةُ الحَشۡرِ","D",24],["Mümtehine","المُمۡتَحنَةِ","سُورَةُ المُمۡتَحنَةِ","D",13],["Saff","الصَّفِّ","سُورَةُ الصَّفِّ","D",14],["Cuma","الجُمُعَةِ","سُورَةُ الجُمُعَةِ","D",11],["Münâfikûn","المُنَافِقُونَ","سُورَةُ المُنَافِقُونَ","D",11],["Teğâbün","التَّغَابُنِ","سُورَةُ التَّغَابُنِ","D",18],["Talâk","الطَّلَاقِ","سُورَةُ الطَّلَاقِ","D",12],["Tahrîm","التَّحۡرِيمِ","سُورَةُ التَّحۡرِيمِ","D",12],["Mülk","المُلۡكِ","سُورَةُ المُلۡكِ","M",30],["Kalem","القَلَمِ","سُورَةُ القَلَمِ","M",52],["Hâkka","الحَاقَّةِ","سُورَةُ الحَاقَّةِ","M",52],["Meâric","المَعَارِجِ","سُورَةُ المَعَارِجِ","M",44],["Nûh","نُوحٍ","سُورَةُ نُوحٍ","M",28],["Cin","الجِنِّ","سُورَةُ الجِنِّ","M",28],["Müzzemmil","المُزَّمِّلِ","سُورَةُ المُزَّمِّلِ","M",20],["Müddessir","المُدَّثِّرِ","سُورَةُ المُدَّثِّرِ","M",56],["Kıyâme","القِيَامَةِ","سُورَةُ القِيَامَةِ","M",40],["İnsân","الإِنسَانِ","سُورَةُ الإِنسَانِ","D",31],["Mürselât","المُرۡسَلَاتِ","سُورَةُ المُرۡسَلَاتِ","M",50],["Nebe'","النَّبَإِ","سُورَةُ النَّبَإِ","M",40],["Nâziât","النَّازِعَاتِ","سُورَةُ النَّازِعَاتِ","M",46],["Abese","عَبَسَ","سُورَةُ عَبَسَ","M",42],["Tekvîr","التَّكۡوِيرِ","سُورَةُ التَّكۡوِيرِ","M",29],["İnfitâr","الانفِطَارِ","سُورَةُ الانفِطَارِ","M",19],["Mutaffifîn","المُطَفِّفِينَ","سُورَةُ المُطَفِّفِينَ","M",36],["İnşikâk","الانشِقَاقِ","سُورَةُ الانشِقَاقِ","M",25],["Bürûc","البُرُوجِ","سُورَةُ البُرُوجِ","M",22],["Târık","الطَّارِقِ","سُورَةُ الطَّارِقِ","M",17],["A'lâ","الأَعۡلَىٰ","سُورَةُ الأَعۡلَىٰ","M",19],["Gâşiye","الغَاشِيَةِ","سُورَةُ الغَاشِيَةِ","M",26],["Fecr","الفَجۡرِ","سُورَةُ الفَجۡرِ","M",30],["Beled","البَلَدِ","سُورَةُ البَلَدِ","M",20],["Şems","الشَّمۡسِ","سُورَةُ الشَّمۡسِ","M",15],["Leyl","اللَّيۡلِ","سُورَةُ اللَّيۡلِ","M",21],["Duhâ","الضُّحَىٰ","سُورَةُ الضُّحَىٰ","M",11],["İnşirâh","الشَّرۡحِ","سُورَةُ الشَّرۡحِ","M",8],["Tîn","التِّينِ","سُورَةُ التِّينِ","M",8],["Alak","العَلَقِ","سُورَةُ العَلَقِ","M",19],["Kadir","القَدۡرِ","سُورَةُ القَدۡرِ","M",5],["Beyyine","البَيِّنَةِ","سُورَةُ البَيِّنَةِ","D",8],["Zilzâl","الزَّلۡزَلَةِ","سُورَةُ الزَّلۡزَلَةِ","D",8],["Âdiyât","العَادِيَاتِ","سُورَةُ العَادِيَاتِ","M",11],["Kâria","القَارِعَةِ","سُورَةُ القَارِعَةِ","M",11],["Tekâsür","التَّكَاثُرِ","سُورَةُ التَّكَاثُرِ","M",8],["Asr","العَصۡرِ","سُورَةُ العَصۡرِ","M",3],["Hümeze","الهُمَزَةِ","سُورَةُ الهُمَزَةِ","M",9],["Fîl","الفِيلِ","سُورَةُ الفِيلِ","M",5],["Kureyş","قُرَيۡشٍ","سُورَةُ قُرَيۡشٍ","M",4],["Mâûn","المَاعُونِ","سُورَةُ المَاعُونِ","M",7],["Kevser","الكَوۡثَرِ","سُورَةُ الكَوۡثَرِ","M",3],["Kâfirûn","الكَافِرُونَ","سُورَةُ الكَافِرُونَ","M",6],["Nasr","النَّصۡرِ","سُورَةُ النَّصۡرِ","D",3],["Mesed","المَسَدِ","سُورَةُ المَسَدِ","M",5],["İhlâs","الإِخۡلَاصِ","سُورَةُ الإِخۡلَاصِ","M",4],["Felak","الفَلَقِ","سُورَةُ الفَلَقِ","M",5],["Nâs","النَّاسِ","سُورَةُ النَّاسِ","M",6]],"juz":[[1,1],[2,142],[2,253],[3,93],[4,24],[4,148],[5,82],[6,111],[7,88],[8,41],[9,93],[11,6],[12,53],[15,1],[17,1],[18,75],[21,1],[23,1],[25,21],[27,56],[29,46],[33,31],[36,28],[39,32],[41,47],[46,1],[51,31],[58,1],[67,1],[78,1]],"sajda":["7:206","13:15","16:50","17:109","19:58","22:18","25:60","27:26","32:15","38:24","41:38","53:62","84:21","96:19"],"bism":"بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ","pool":[[2,152,"فَٱذْكُرُونِىٓ أَذْكُرْكُمْ وَٱشْكُرُوا۟ لِى وَلَا تَكْفُرُونِ","Artık Beni anın, Ben de sizi anayım; Bana şükredin, nankörlük etmeyin."],[94,5,"فَإِنَّ مَعَ ٱلْعُسْرِ يُسْرًا","Elbette güçlükle beraber şüphesiz bir kolaylık vardır."],[12,87,"يَٰبَنِىَّ ٱذْهَبُوا۟ فَتَحَسَّسُوا۟ مِن يُوسُفَ وَأَخِيهِ وَلَا تَا۟يْـَٔسُوا۟ مِن رَّوْحِ ٱللَّهِ ۖ إِنَّهُۥ لَا يَا۟يْـَٔسُ مِن رَّوْحِ ٱللَّهِ إِلَّا ٱلْقَوْمُ ٱلْكَٰفِرُونَ","\"Ey Oğullarım! Gidin, Yusuf'u ve kardeşini arayın. Allah'ın rahmetinden ümidinizi kesmeyin; doğrusu kafirlerden başkası Allah'ın rahmetinden ümidini kesmez.\""],[3,8,"رَبَّنَا لَا تُزِغْ قُلُوبَنَا بَعْدَ إِذْ هَدَيْتَنَا وَهَبْ لَنَا مِن لَّدُنكَ رَحْمَةً ۚ إِنَّكَ أَنتَ ٱلْوَهَّابُ","Rabbimiz! Bizi doğru yola erdirdikten sonra kalblerimizi eğriltme, katından bize rahmet bağışla; şüphesiz Sen sonsuz bağışta bulunansın."],[2,255,"ٱللَّهُ لَآ إِلَٰهَ إِلَّا هُوَ ٱلْحَىُّ ٱلْقَيُّومُ ۚ لَا تَأْخُذُهُۥ سِنَةٌۭ وَلَا نَوْمٌۭ ۚ لَّهُۥ مَا فِى ٱلسَّمَٰوَٰتِ وَمَا فِى ٱلْأَرْضِ ۗ مَن ذَا ٱلَّذِى يَشْفَعُ عِندَهُۥٓ إِلَّا بِإِذْنِهِۦ ۚ يَعْلَمُ مَا بَيْنَ أَيْدِيهِمْ وَمَا خَلْفَهُمْ ۖ وَلَا يُحِيطُونَ بِشَىْءٍۢ مِّنْ عِلْمِهِۦٓ إِلَّا بِمَا شَآءَ ۚ وَسِعَ كُرْسِيُّهُ ٱلسَّمَٰوَٰتِ وَٱلْأَرْضَ ۖ وَلَا يَـُٔودُهُۥ حِفْظُهُمَا ۚ وَهُوَ ٱلْعَلِىُّ ٱلْعَظِيمُ","Allah, O'ndan başka tanrı olmayan, kendisini uyuklama ve uyku tutmayan, diri, her an yaratıklarını gözetip durandır. Göklerde olan ve yerde olan ancak O'nundur. O'nun izni olmadan katında şefaat edecek kimdir? Onların işlediklerini ve işleyeceklerini bilir, dilediğinden başka ilminden hiçbir şeyi kavrayamazlar. Hükümranlığı gökleri ve yeri kaplamıştır, onların gözetilmesi O'na ağır gelmez. O yücedir, büyüktür."],[49,10,"إِنَّمَا ٱلْمُؤْمِنُونَ إِخْوَةٌۭ فَأَصْلِحُوا۟ بَيْنَ أَخَوَيْكُمْ ۚ وَٱتَّقُوا۟ ٱللَّهَ لَعَلَّكُمْ تُرْحَمُونَ","Şüphesiz müminler birbiri ile kardeştirler; öyle ise dargın olan kardeşlerinizin arasını düzeltin; Allah'tan sakının ki size acısın."],[14,7,"وَإِذْ تَأَذَّنَ رَبُّكُمْ لَئِن شَكَرْتُمْ لَأَزِيدَنَّكُمْ ۖ وَلَئِن كَفَرْتُمْ إِنَّ عَذَابِى لَشَدِيدٌۭ","Rabbiniz: \"Şükrederseniz and olsun ki, size karşılığını artıracağım; nankörlük ederseniz bilin ki azabım pek çetindir\" diye bildirmişti."],[2,153,"يَٰٓأَيُّهَا ٱلَّذِينَ ءَامَنُوا۟ ٱسْتَعِينُوا۟ بِٱلصَّبْرِ وَٱلصَّلَوٰةِ ۚ إِنَّ ٱللَّهَ مَعَ ٱلصَّٰبِرِينَ","Ey İnananlar! Sabır ve namazla yardım dileyin. Allah, muhakkak ki sabredenlerle beraberdir."],[39,53,"۞ قُلْ يَٰعِبَادِىَ ٱلَّذِينَ أَسْرَفُوا۟ عَلَىٰٓ أَنفُسِهِمْ لَا تَقْنَطُوا۟ مِن رَّحْمَةِ ٱللَّهِ ۚ إِنَّ ٱللَّهَ يَغْفِرُ ٱلذُّنُوبَ جَمِيعًا ۚ إِنَّهُۥ هُوَ ٱلْغَفُورُ ٱلرَّحِيمُ","De ki: \"Ey kendilerine kötülük edip aşırı giden kullarım! Allah'ın rahmetinden umudunuzu kesmeyin. Doğrusu Allah günahların hepsini bağışlar. Çünkü O, bağışlayandır, merhametlidir.\""],[17,24,"وَٱخْفِضْ لَهُمَا جَنَاحَ ٱلذُّلِّ مِنَ ٱلرَّحْمَةِ وَقُل رَّبِّ ٱرْحَمْهُمَا كَمَا رَبَّيَانِى صَغِيرًۭا","Onlara acıyarak alçak gönüllülük kanatlarını ger ve: \"Rabbim! Küçükken beni yetiştirdikleri gibi sen de onlara merhamet et!\" de."],[1,2,"ٱلْحَمْدُ لِلَّهِ رَبِّ ٱلْعَٰلَمِينَ","Hamd, Alemlerin Rabbi Allah'a mahsustur."],[13,28,"ٱلَّذِينَ ءَامَنُوا۟ وَتَطْمَئِنُّ قُلُوبُهُم بِذِكْرِ ٱللَّهِ ۗ أَلَا بِذِكْرِ ٱللَّهِ تَطْمَئِنُّ ٱلْقُلُوبُ","Onlar inanmışlar, kalbleri Allah'ı anmakla huzura kavuşmuştur. Dikkat edin, kalbler ancak Allah'ı anmakla huzura kavuşur."],[93,5,"وَلَسَوْفَ يُعْطِيكَ رَبُّكَ فَتَرْضَىٰٓ","Rabbin şüphesiz sana verecek ve sen de hoşnut olacaksın."],[25,74,"وَٱلَّذِينَ يَقُولُونَ رَبَّنَا هَبْ لَنَا مِنْ أَزْوَٰجِنَا وَذُرِّيَّٰتِنَا قُرَّةَ أَعْيُنٍۢ وَٱجْعَلْنَا لِلْمُتَّقِينَ إِمَامًا","Onlar: \"Rabbimiz! Bize eşlerimizden ve çocuklarımızdan gözümüzün aydınlığı olacak insanlar ihsan et ve bizi, Allah'a karşı gelmekten sakınanlara önder yap\" derler."],[16,128,"إِنَّ ٱللَّهَ مَعَ ٱلَّذِينَ ٱتَّقَوا۟ وَّٱلَّذِينَ هُم مُّحْسِنُونَ","Allah şüphesiz sakınanlarla ve iyilik yapanlarla beraberdir."],[57,4,"هُوَ ٱلَّذِى خَلَقَ ٱلسَّمَٰوَٰتِ وَٱلْأَرْضَ فِى سِتَّةِ أَيَّامٍۢ ثُمَّ ٱسْتَوَىٰ عَلَى ٱلْعَرْشِ ۚ يَعْلَمُ مَا يَلِجُ فِى ٱلْأَرْضِ وَمَا يَخْرُجُ مِنْهَا وَمَا يَنزِلُ مِنَ ٱلسَّمَآءِ وَمَا يَعْرُجُ فِيهَا ۖ وَهُوَ مَعَكُمْ أَيْنَ مَا كُنتُمْ ۚ وَٱللَّهُ بِمَا تَعْمَلُونَ بَصِيرٌۭ","Gökleri ve yeri altı günde yaratan, sonra arşa hükmeden, yere gireni ve ondan çıkanı, gökten ineni ve oraya yükseleni bilen O'dur. Nerede olursanız olun, O, sizinle beraberdir. Allah yaptıklarınızı görür."],[21,107,"وَمَآ أَرْسَلْنَٰكَ إِلَّا رَحْمَةًۭ لِّلْعَٰلَمِينَ","Biz seni ancak alemlere rahmet olarak gönderdik."],[7,23,"قَالَا رَبَّنَا ظَلَمْنَآ أَنفُسَنَا وَإِن لَّمْ تَغْفِرْ لَنَا وَتَرْحَمْنَا لَنَكُونَنَّ مِنَ ٱلْخَٰسِرِينَ","Her ikisi, \"Rabbimiz! Kendimize yazık ettik; bizi bağışlamaz ve bize merhamet etmezsen biz kaybedenlerden oluruz\" dediler."],[2,186,"وَإِذَا سَأَلَكَ عِبَادِى عَنِّى فَإِنِّى قَرِيبٌ ۖ أُجِيبُ دَعْوَةَ ٱلدَّاعِ إِذَا دَعَانِ ۖ فَلْيَسْتَجِيبُوا۟ لِى وَلْيُؤْمِنُوا۟ بِى لَعَلَّهُمْ يَرْشُدُونَ","Kullarım sana Beni sorarlarsa, bilsinler ki Ben, şüphesiz onlara yakınım. Benden isteyenin, dua ettiğinde duasını kabul ederim. Artık onlar da davetimi kabul edip Bana inansınlar ki doğru yolda yürüyenlerden olsunlar."],[3,139,"وَلَا تَهِنُوا۟ وَلَا تَحْزَنُوا۟ وَأَنتُمُ ٱلْأَعْلَوْنَ إِن كُنتُم مُّؤْمِنِينَ","Gevşemeyin, üzülmeyin, inanmışsanız, mutlaka siz en üstünsünüzdür."],[33,41,"يَٰٓأَيُّهَا ٱلَّذِينَ ءَامَنُوا۟ ٱذْكُرُوا۟ ٱللَّهَ ذِكْرًۭا كَثِيرًۭا","Ey inananlar! Allah'ı çok anın."],[29,69,"وَٱلَّذِينَ جَٰهَدُوا۟ فِينَا لَنَهْدِيَنَّهُمْ سُبُلَنَا ۚ وَإِنَّ ٱللَّهَ لَمَعَ ٱلْمُحْسِنِينَ","Ama Bizim uğrumuzda cihat edenleri elbette yollarımıza eriştireceğiz. Allah şüphesiz, iyi davrananlarla beraberdir."],[59,22,"هُوَ ٱللَّهُ ٱلَّذِى لَآ إِلَٰهَ إِلَّا هُوَ ۖ عَٰلِمُ ٱلْغَيْبِ وَٱلشَّهَٰدَةِ ۖ هُوَ ٱلرَّحْمَٰنُ ٱلرَّحِيمُ","O, görüleni de görülmeyeni de bilen, kendisinden başka tanrı olmayan Allah'tır. O, acıyıcı olandır, acıyandır."],[41,34,"وَلَا تَسْتَوِى ٱلْحَسَنَةُ وَلَا ٱلسَّيِّئَةُ ۚ ٱدْفَعْ بِٱلَّتِى هِىَ أَحْسَنُ فَإِذَا ٱلَّذِى بَيْنَكَ وَبَيْنَهُۥ عَدَٰوَةٌۭ كَأَنَّهُۥ وَلِىٌّ حَمِيمٌۭ","İyilik ve fenalık bir değildir. Ey inanan kişi: Sen, fenalığı en güzel şekilde sav; o zaman, seninle arasında düşmanlık bulunan kişinin yakın bir dost gibi olduğunu görürsün."],[28,24,"فَسَقَىٰ لَهُمَا ثُمَّ تَوَلَّىٰٓ إِلَى ٱلظِّلِّ فَقَالَ رَبِّ إِنِّى لِمَآ أَنزَلْتَ إِلَىَّ مِنْ خَيْرٍۢ فَقِيرٌۭ","Musa onların davarlarını suladı. Sonra gölgeye çekildi: \"Rabbim! Doğrusu bana indireceğin hayra muhtacım\" dedi."],[50,16,"وَلَقَدْ خَلَقْنَا ٱلْإِنسَٰنَ وَنَعْلَمُ مَا تُوَسْوِسُ بِهِۦ نَفْسُهُۥ ۖ وَنَحْنُ أَقْرَبُ إِلَيْهِ مِنْ حَبْلِ ٱلْوَرِيدِ","And olsun ki insanı Biz yarattık; nefsinin kendisine fısıldadıklarını biliriz; Biz ona şah damarından daha yakınız."],[10,62,"أَلَآ إِنَّ أَوْلِيَآءَ ٱللَّهِ لَا خَوْفٌ عَلَيْهِمْ وَلَا هُمْ يَحْزَنُونَ","İyi bilin ki, Allah'ın dostlarına korku yoktur, onlar üzülmeyeceklerdir."],[14,41,"رَبَّنَا ٱغْفِرْ لِى وَلِوَٰلِدَىَّ وَلِلْمُؤْمِنِينَ يَوْمَ يَقُومُ ٱلْحِسَابُ","\"Rabbimiz! Hesap görülecek günde, beni, anamı babamı ve inananları bağışla.\""],[51,56,"وَمَا خَلَقْتُ ٱلْجِنَّ وَٱلْإِنسَ إِلَّا لِيَعْبُدُونِ","Cinleri ve insanları ancak Bana kulluk etmeleri için yaratmışımdır."],[42,43,"وَلَمَن صَبَرَ وَغَفَرَ إِنَّ ذَٰلِكَ لَمِنْ عَزْمِ ٱلْأُمُورِ","Ama sabredip bağışlayanın işi, işte bu, azmedilmeye değer işlerdendir."],[20,82,"وَإِنِّى لَغَفَّارٌۭ لِّمَن تَابَ وَءَامَنَ وَعَمِلَ صَٰلِحًۭا ثُمَّ ٱهْتَدَىٰ","Doğrusu Ben, tevbe edeni, inanıp yararlı iş işleyerek doğru yola gireni bağışlarım."],[9,51,"قُل لَّن يُصِيبَنَآ إِلَّا مَا كَتَبَ ٱللَّهُ لَنَا هُوَ مَوْلَىٰنَا ۚ وَعَلَى ٱللَّهِ فَلْيَتَوَكَّلِ ٱلْمُؤْمِنُونَ","De ki: \"Allah'ın bize yazdığından başkası başımıza gelmez. O bizim Mevlamızdır, inananlar Allah'a güvensin.\""],[2,201,"وَمِنْهُم مَّن يَقُولُ رَبَّنَآ ءَاتِنَا فِى ٱلدُّنْيَا حَسَنَةًۭ وَفِى ٱلْءَاخِرَةِ حَسَنَةًۭ وَقِنَا عَذَابَ ٱلنَّارِ","\"Rabbimiz! Bize dünyada iyiyi, ahirette de iyiyi ver, bizi ateşin azabından koru\" diyenler vardır."],[53,39,"وَأَن لَّيْسَ لِلْإِنسَٰنِ إِلَّا مَا سَعَىٰ","İnsan ancak çalıştığına erişir."],[16,97,"مَنْ عَمِلَ صَٰلِحًۭا مِّن ذَكَرٍ أَوْ أُنثَىٰ وَهُوَ مُؤْمِنٌۭ فَلَنُحْيِيَنَّهُۥ حَيَوٰةًۭ طَيِّبَةًۭ ۖ وَلَنَجْزِيَنَّهُمْ أَجْرَهُم بِأَحْسَنِ مَا كَانُوا۟ يَعْمَلُونَ","Kadın, erkek, inanmış olarak kim iyi iş işlerse, ona hoş bir hayat yaşatacağız. Ecirlerini yaptıklarından daha güzeli ile ödeyeceğiz."],[40,60,"وَقَالَ رَبُّكُمُ ٱدْعُونِىٓ أَسْتَجِبْ لَكُمْ ۚ إِنَّ ٱلَّذِينَ يَسْتَكْبِرُونَ عَنْ عِبَادَتِى سَيَدْخُلُونَ جَهَنَّمَ دَاخِرِينَ","Rabbiniz: \"Bana dua edin ki duanıza icabet edeyim. Bana kulluk etmeyi büyüklüklerine yediremeyenler alçalmış olarak cehenneme gireceklerdir\" buyurmuştur."],[30,21,"وَمِنْ ءَايَٰتِهِۦٓ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَٰجًۭا لِّتَسْكُنُوٓا۟ إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةًۭ وَرَحْمَةً ۚ إِنَّ فِى ذَٰلِكَ لَءَايَٰتٍۢ لِّقَوْمٍۢ يَتَفَكَّرُونَ","İçinizden, kendileriyle huzura kavuşacağınız eşler yaratıp; aranızda muhabbet ve rahmet var etmesi, O'nun varlığının belgelerindendir. Bunlarda, düşünen millet için dersler vardır."],[59,10,"وَٱلَّذِينَ جَآءُو مِنۢ بَعْدِهِمْ يَقُولُونَ رَبَّنَا ٱغْفِرْ لَنَا وَلِإِخْوَٰنِنَا ٱلَّذِينَ سَبَقُونَا بِٱلْإِيمَٰنِ وَلَا تَجْعَلْ فِى قُلُوبِنَا غِلًّۭا لِّلَّذِينَ ءَامَنُوا۟ رَبَّنَآ إِنَّكَ رَءُوفٌۭ رَّحِيمٌ","Onlardan sonra gelenler: \"Rabbimiz! Bizi ve bizden önce inanmış olan kardeşlerimizi bağışla; kalbimizde müminlere karşı kin bırakma; Rabbimiz! Şüphesiz Sen şefkatlisin, merhametlisin\" derler."],[24,22,"وَلَا يَأْتَلِ أُو۟لُوا۟ ٱلْفَضْلِ مِنكُمْ وَٱلسَّعَةِ أَن يُؤْتُوٓا۟ أُو۟لِى ٱلْقُرْبَىٰ وَٱلْمَسَٰكِينَ وَٱلْمُهَٰجِرِينَ فِى سَبِيلِ ٱللَّهِ ۖ وَلْيَعْفُوا۟ وَلْيَصْفَحُوٓا۟ ۗ أَلَا تُحِبُّونَ أَن يَغْفِرَ ٱللَّهُ لَكُمْ ۗ وَٱللَّهُ غَفُورٌۭ رَّحِيمٌ","İçinizde lütuf ve servet sahibi olanlar, yakınlarına, düşkünlere ve Allah yolunda hicret edenlere, vermemek için yemin etmesinler, affetsinler, geçsinler. Allah'ın sizi bağışlamasından hoşlanmaz mısınız? Allah bağışlayandır, merhametli olandır."],[18,10,"إِذْ أَوَى ٱلْفِتْيَةُ إِلَى ٱلْكَهْفِ فَقَالُوا۟ رَبَّنَآ ءَاتِنَا مِن لَّدُنكَ رَحْمَةًۭ وَهَيِّئْ لَنَا مِنْ أَمْرِنَا رَشَدًۭا","Birkaç genç mağaraya sığınmış: \"Rabbimiz! Katından bize rahmet ver ve işimizde doğruyu göster, bizi başarılı kıl\" demişlerdi."],[55,13,"فَبِأَىِّ ءَالَآءِ رَبِّكُمَا تُكَذِّبَانِ","Ey insanlar ve cinler! Öyleyken, Rabbinizin nimetlerinden hangisini yalanlarsınız?"],[93,3,"مَا وَدَّعَكَ رَبُّكَ وَمَا قَلَىٰ","Rabbin seni ne bıraktı ve ne de sana darıldı."],[39,10,"قُلْ يَٰعِبَادِ ٱلَّذِينَ ءَامَنُوا۟ ٱتَّقُوا۟ رَبَّكُمْ ۚ لِلَّذِينَ أَحْسَنُوا۟ فِى هَٰذِهِ ٱلدُّنْيَا حَسَنَةٌۭ ۗ وَأَرْضُ ٱللَّهِ وَٰسِعَةٌ ۗ إِنَّمَا يُوَفَّى ٱلصَّٰبِرُونَ أَجْرَهُم بِغَيْرِ حِسَابٍۢ","Şöyle de: \"Ey inanan kullarım! Rabbinize karşı gelmekten sakının; bu dünyada iyilik yapanlara iyilik vardır. Allah'ın yarattığı yeryüzü geniştir. Yalnız sabredenlere, ecirleri sonsuz olarak ödenecektir.\""],[21,83,"۞ وَأَيُّوبَ إِذْ نَادَىٰ رَبَّهُۥٓ أَنِّى مَسَّنِىَ ٱلضُّرُّ وَأَنتَ أَرْحَمُ ٱلرَّٰحِمِينَ","Eyyub da: \"Başıma bir bela geldi, (Sana sığındım), Sen merhametlilerin merhametlisisin\" diye Rabbine nida etmişti."],[49,13,"يَٰٓأَيُّهَا ٱلنَّاسُ إِنَّا خَلَقْنَٰكُم مِّن ذَكَرٍۢ وَأُنثَىٰ وَجَعَلْنَٰكُمْ شُعُوبًۭا وَقَبَآئِلَ لِتَعَارَفُوٓا۟ ۚ إِنَّ أَكْرَمَكُمْ عِندَ ٱللَّهِ أَتْقَىٰكُمْ ۚ إِنَّ ٱللَّهَ عَلِيمٌ خَبِيرٌۭ","Ey insanlar! Doğrusu Biz sizleri bir erkekle bir dişiden yarattık. Sizi milletler ve kabileler haline koyduk ki birbirinizi kolayca tanıyasınız. Şüphesiz, Allah katında en değerliniz, O'na karşı gelmekten en çok sakınanızdır. Allah bilendir, haberdardır."],[57,3,"هُوَ ٱلْأَوَّلُ وَٱلْءَاخِرُ وَٱلظَّٰهِرُ وَٱلْبَاطِنُ ۖ وَهُوَ بِكُلِّ شَىْءٍ عَلِيمٌ","O her şeyden öncedir; kendisinden sonraya hiçbir şeyin kalmayacağı son'dur; varlığı aşikardır; gerçek mahiyeti insan için gizlidir. O her şeyi bilir."],[9,129,"فَإِن تَوَلَّوْا۟ فَقُلْ حَسْبِىَ ٱللَّهُ لَآ إِلَٰهَ إِلَّا هُوَ ۖ عَلَيْهِ تَوَكَّلْتُ ۖ وَهُوَ رَبُّ ٱلْعَرْشِ ٱلْعَظِيمِ","Eğer yüz çevirirlerse de ki: \"Allah bana yeter; O'ndan başka tanrı yoktur, yalnız O'na güveniyorum; O büyük arşın Rabbidir.\""],[96,1,"ٱقْرَأْ بِٱسْمِ رَبِّكَ ٱلَّذِى خَلَقَ","Yaratan Rabbinin adıyla oku!"],[7,56,"وَلَا تُفْسِدُوا۟ فِى ٱلْأَرْضِ بَعْدَ إِصْلَٰحِهَا وَٱدْعُوهُ خَوْفًۭا وَطَمَعًا ۚ إِنَّ رَحْمَتَ ٱللَّهِ قَرِيبٌۭ مِّنَ ٱلْمُحْسِنِينَ","Düzeltilmişken, yeryüzünde bozgunculuk yapmayın. Allah'a korkarak ve umutla yalvarın. Doğrusu Allah'ın rahmeti iyi davrananlara yakındır."],[25,63,"وَعِبَادُ ٱلرَّحْمَٰنِ ٱلَّذِينَ يَمْشُونَ عَلَى ٱلْأَرْضِ هَوْنًۭا وَإِذَا خَاطَبَهُمُ ٱلْجَٰهِلُونَ قَالُوا۟ سَلَٰمًۭا","Rahman'ın kulları yeryüzünde mütevazı yürürler. Bilgisizler kendilerine takıldıkları zaman onlara güzel ve yumuşak söz söylerler."],[3,173,"ٱلَّذِينَ قَالَ لَهُمُ ٱلنَّاسُ إِنَّ ٱلنَّاسَ قَدْ جَمَعُوا۟ لَكُمْ فَٱخْشَوْهُمْ فَزَادَهُمْ إِيمَٰنًۭا وَقَالُوا۟ حَسْبُنَا ٱللَّهُ وَنِعْمَ ٱلْوَكِيلُ","İnsanlar onlara: \"Düşmanınız olan insanlar size karşı bir ordu topladılar, onlardan korkun\" dediler. Bu, onların imanını artırdı da: \"Allah bize yeter. O ne güzel Vekil'dir\" dediler."],[16,18,"وَإِن تَعُدُّوا۟ نِعْمَةَ ٱللَّهِ لَا تُحْصُوهَآ ۗ إِنَّ ٱللَّهَ لَغَفُورٌۭ رَّحِيمٌۭ","Allah'ın verdiği nimetleri sayacak olsanız bitiremezsiniz; doğrusu Allah bağışlar, merhamet eder."],[20,114,"فَتَعَٰلَى ٱللَّهُ ٱلْمَلِكُ ٱلْحَقُّ ۗ وَلَا تَعْجَلْ بِٱلْقُرْءَانِ مِن قَبْلِ أَن يُقْضَىٰٓ إِلَيْكَ وَحْيُهُۥ ۖ وَقُل رَّبِّ زِدْنِى عِلْمًۭا","Gerçek hükümdar olan Allah Yüce'dir. Kuran sana vahyedilirken, vahy bitmezden önce, unutmamak için, tekrarda acele edip durma, \"Rabbim! ilmimi artır\" de."],[12,86,"قَالَ إِنَّمَآ أَشْكُوا۟ بَثِّى وَحُزْنِىٓ إِلَى ٱللَّهِ وَأَعْلَمُ مِنَ ٱللَّهِ مَا لَا تَعْلَمُونَ","Yakup: \"Ben üzüntü ve tasamı yalnız Allah'a açarım. Allah katından, sizin bilmediklerinizi bilirim\" dedi."],[67,2,"ٱلَّذِى خَلَقَ ٱلْمَوْتَ وَٱلْحَيَوٰةَ لِيَبْلُوَكُمْ أَيُّكُمْ أَحْسَنُ عَمَلًۭا ۚ وَهُوَ ٱلْعَزِيزُ ٱلْغَفُورُ","Hanginizin daha iyi iş işlediğini belirtmek için, ölümü ve dirimi (hayatı) yaratan O'dur. O, güçlüdür, bağışlayandır."],[17,23,"۞ وَقَضَىٰ رَبُّكَ أَلَّا تَعْبُدُوٓا۟ إِلَّآ إِيَّاهُ وَبِٱلْوَٰلِدَيْنِ إِحْسَٰنًا ۚ إِمَّا يَبْلُغَنَّ عِندَكَ ٱلْكِبَرَ أَحَدُهُمَآ أَوْ كِلَاهُمَا فَلَا تَقُل لَّهُمَآ أُفٍّۢ وَلَا تَنْهَرْهُمَا وَقُل لَّهُمَا قَوْلًۭا كَرِيمًۭا","Rabbin, yalnız Kendisine tapmanızı ve ana babaya iyilik etmeyi buyurmuştur. Eğer ikisinden biri veya her ikisi, senin yanında iken ihtiyarlayacak olursa, onlara karşı \"Öf\" bile demeyesin, onları azarlamayasın. İkisine de hep tatlı söz söyleyesin."],[31,12,"وَلَقَدْ ءَاتَيْنَا لُقْمَٰنَ ٱلْحِكْمَةَ أَنِ ٱشْكُرْ لِلَّهِ ۚ وَمَن يَشْكُرْ فَإِنَّمَا يَشْكُرُ لِنَفْسِهِۦ ۖ وَمَن كَفَرَ فَإِنَّ ٱللَّهَ غَنِىٌّ حَمِيدٌۭ","And olsun ki, Lokman'a, Allah'a şükretmesi için hikmet verdik. Şükreden kimse ancak kendisi için şükretmiş olur. Nankörlük eden ise, bilsin ki, Allah her şeyden müstağnidir, övülmeğe layık olandır."],[58,11,"يَٰٓأَيُّهَا ٱلَّذِينَ ءَامَنُوٓا۟ إِذَا قِيلَ لَكُمْ تَفَسَّحُوا۟ فِى ٱلْمَجَٰلِسِ فَٱفْسَحُوا۟ يَفْسَحِ ٱللَّهُ لَكُمْ ۖ وَإِذَا قِيلَ ٱنشُزُوا۟ فَٱنشُزُوا۟ يَرْفَعِ ٱللَّهُ ٱلَّذِينَ ءَامَنُوا۟ مِنكُمْ وَٱلَّذِينَ أُوتُوا۟ ٱلْعِلْمَ دَرَجَٰتٍۢ ۚ وَٱللَّهُ بِمَا تَعْمَلُونَ خَبِيرٌۭ","Ey inananlar! Toplantılarda, size, \"Yer açın\" denince yer açın ki Allah da size genişlik versin; \"Kalkın\" denildiği zaman da hemen kalkın ki, Allah, içinizden inanmış olanları ve kendilerine ilim verilenleri derecelerle yükseltsin. Allah işlediklerinizden haberdardır."],[2,286,"لَا يُكَلِّفُ ٱللَّهُ نَفْسًا إِلَّا وُسْعَهَا ۚ لَهَا مَا كَسَبَتْ وَعَلَيْهَا مَا ٱكْتَسَبَتْ ۗ رَبَّنَا لَا تُؤَاخِذْنَآ إِن نَّسِينَآ أَوْ أَخْطَأْنَا ۚ رَبَّنَا وَلَا تَحْمِلْ عَلَيْنَآ إِصْرًۭا كَمَا حَمَلْتَهُۥ عَلَى ٱلَّذِينَ مِن قَبْلِنَا ۚ رَبَّنَا وَلَا تُحَمِّلْنَا مَا لَا طَاقَةَ لَنَا بِهِۦ ۖ وَٱعْفُ عَنَّا وَٱغْفِرْ لَنَا وَٱرْحَمْنَآ ۚ أَنتَ مَوْلَىٰنَا فَٱنصُرْنَا عَلَى ٱلْقَوْمِ ٱلْكَٰفِرِينَ","Allah kişiye ancak gücünün yeteceği kadar yükler; kazandığı iyilik lehine, ettiği kötülük de aleyhinedir. Rabbimiz! Eğer unutacak veya yanılacak olursak bizi sorumlu tutma. Rabbimiz bizden öncekilere yüklediğin gibi, bize de ağır yük yükleme. Rabbimiz! Bize gücümüzün yetmeyeceği şeyi taşıtma, bizi affet, bizi bağışla, bize acı. Sen Mevlamızsın, kafirlere karşı bize yardım et."],[23,118,"وَقُل رَّبِّ ٱغْفِرْ وَٱرْحَمْ وَأَنتَ خَيْرُ ٱلرَّٰحِمِينَ","De ki: \"Rabbim! Bağışla, merhamet et, Sen merhamet edenlerin en hayırlısısın.\""],[18,46,"ٱلْمَالُ وَٱلْبَنُونَ زِينَةُ ٱلْحَيَوٰةِ ٱلدُّنْيَا ۖ وَٱلْبَٰقِيَٰتُ ٱلصَّٰلِحَٰتُ خَيْرٌ عِندَ رَبِّكَ ثَوَابًۭا وَخَيْرٌ أَمَلًۭا","Mal ve oğullar, dünya hayatının süsüdür. Ama baki kalacak yararlı işler, sevab olarak da, emel olarak da, Rabbinin katında daha hayırlıdır."],[42,19,"ٱللَّهُ لَطِيفٌۢ بِعِبَادِهِۦ يَرْزُقُ مَن يَشَآءُ ۖ وَهُوَ ٱلْقَوِىُّ ٱلْعَزِيزُ","Allah, kullarına lütufta bulunandır. Dilediğini rızıklandırır. Kuvvetli olan da güçlü olan da O'dur."],[4,28,"يُرِيدُ ٱللَّهُ أَن يُخَفِّفَ عَنكُمْ ۚ وَخُلِقَ ٱلْإِنسَٰنُ ضَعِيفًۭا","İnsan zayıf yaratılmış olduğundan Allah sizden yükü hafifletmek ister."],[48,4,"هُوَ ٱلَّذِىٓ أَنزَلَ ٱلسَّكِينَةَ فِى قُلُوبِ ٱلْمُؤْمِنِينَ لِيَزْدَادُوٓا۟ إِيمَٰنًۭا مَّعَ إِيمَٰنِهِمْ ۗ وَلِلَّهِ جُنُودُ ٱلسَّمَٰوَٰتِ وَٱلْأَرْضِ ۚ وَكَانَ ٱللَّهُ عَلِيمًا حَكِيمًۭا","İnananların, imanlarını kat kat artırmaları için, kalblerine güven indiren O'dur. Göklerdeki ve yerdeki ordular Allah'ındır. Allah bilendir, Hakim olandır."],[17,70,"۞ وَلَقَدْ كَرَّمْنَا بَنِىٓ ءَادَمَ وَحَمَلْنَٰهُمْ فِى ٱلْبَرِّ وَٱلْبَحْرِ وَرَزَقْنَٰهُم مِّنَ ٱلطَّيِّبَٰتِ وَفَضَّلْنَٰهُمْ عَلَىٰ كَثِيرٍۢ مِّمَّنْ خَلَقْنَا تَفْضِيلًۭا","And olsun ki, biz insanoğullarını şerefli kıldık, onların karada ve denizde gezmesini sağladık, temiz şeylerle onları rızıklandırdık, yaratıklarımızın pek çoğundan üstün kıldık."],[29,45,"ٱتْلُ مَآ أُوحِىَ إِلَيْكَ مِنَ ٱلْكِتَٰبِ وَأَقِمِ ٱلصَّلَوٰةَ ۖ إِنَّ ٱلصَّلَوٰةَ تَنْهَىٰ عَنِ ٱلْفَحْشَآءِ وَٱلْمُنكَرِ ۗ وَلَذِكْرُ ٱللَّهِ أَكْبَرُ ۗ وَٱللَّهُ يَعْلَمُ مَا تَصْنَعُونَ","Kitap'tan sana vahyolunanı oku; namaz kıl; muhakkak ki namaz hayasızlıktan ve fenalıktan alıkor; Allah'ı anmak en büyük şeydir! Allah Yaptıklarınızı bilir."],[35,29,"إِنَّ ٱلَّذِينَ يَتْلُونَ كِتَٰبَ ٱللَّهِ وَأَقَامُوا۟ ٱلصَّلَوٰةَ وَأَنفَقُوا۟ مِمَّا رَزَقْنَٰهُمْ سِرًّۭا وَعَلَانِيَةًۭ يَرْجُونَ تِجَٰرَةًۭ لَّن تَبُورَ","Allah'ın Kitap'ına uyanlar, namazı kılanlar, kendilerine verdiğimiz rızıktan gizli ve açık sarfedenler, tükenmeyecek bir kazanç umabilirler."],[64,16,"فَٱتَّقُوا۟ ٱللَّهَ مَا ٱسْتَطَعْتُمْ وَٱسْمَعُوا۟ وَأَطِيعُوا۟ وَأَنفِقُوا۟ خَيْرًۭا لِّأَنفُسِكُمْ ۗ وَمَن يُوقَ شُحَّ نَفْسِهِۦ فَأُو۟لَٰٓئِكَ هُمُ ٱلْمُفْلِحُونَ","Allah'a karşı gelmekten gücünüzün yettiği kadar sakının, buyruklarını dinleyin, itaat edin; kendinizin iyiliğine olarak mallarınızdan sarfedin; nefsinin tamahkarlığından korunan kimseler, işte onlar saadete erenlerdir."],[16,53,"وَمَا بِكُم مِّن نِّعْمَةٍۢ فَمِنَ ٱللَّهِ ۖ ثُمَّ إِذَا مَسَّكُمُ ٱلضُّرُّ فَإِلَيْهِ تَجْـَٔرُونَ","Size gelen her nimet Allah'tandır. Sonra, bir sıkıntıya uğradığınızda yalnız O'na sığınırsınız."],[57,22,"مَآ أَصَابَ مِن مُّصِيبَةٍۢ فِى ٱلْأَرْضِ وَلَا فِىٓ أَنفُسِكُمْ إِلَّا فِى كِتَٰبٍۢ مِّن قَبْلِ أَن نَّبْرَأَهَآ ۚ إِنَّ ذَٰلِكَ عَلَى ٱللَّهِ يَسِيرٌۭ","Yeryüzüne ve sizin başınıza gelen herhangi bir musibet yoktur ki biz onu yaratmadan önce o, Kitap'da bulunmasın. Doğrusu bu Allah'a kolaydır."],[3,191,"ٱلَّذِينَ يَذْكُرُونَ ٱللَّهَ قِيَٰمًۭا وَقُعُودًۭا وَعَلَىٰ جُنُوبِهِمْ وَيَتَفَكَّرُونَ فِى خَلْقِ ٱلسَّمَٰوَٰتِ وَٱلْأَرْضِ رَبَّنَا مَا خَلَقْتَ هَٰذَا بَٰطِلًۭا سُبْحَٰنَكَ فَقِنَا عَذَابَ ٱلنَّارِ","Onlar ayakta iken, otururken, yan yatarken Allah'ı anarlar; göklerin ve yerin yaratılışını düşünürler: \"Rabbimiz! Sen bunu boşuna yaratmadın, Sen münezzehsin. Bizi ateşin azabından koru\""],[24,35,"۞ ٱللَّهُ نُورُ ٱلسَّمَٰوَٰتِ وَٱلْأَرْضِ ۚ مَثَلُ نُورِهِۦ كَمِشْكَوٰةٍۢ فِيهَا مِصْبَاحٌ ۖ ٱلْمِصْبَاحُ فِى زُجَاجَةٍ ۖ ٱلزُّجَاجَةُ كَأَنَّهَا كَوْكَبٌۭ دُرِّىٌّۭ يُوقَدُ مِن شَجَرَةٍۢ مُّبَٰرَكَةٍۢ زَيْتُونَةٍۢ لَّا شَرْقِيَّةٍۢ وَلَا غَرْبِيَّةٍۢ يَكَادُ زَيْتُهَا يُضِىٓءُ وَلَوْ لَمْ تَمْسَسْهُ نَارٌۭ ۚ نُّورٌ عَلَىٰ نُورٍۢ ۗ يَهْدِى ٱللَّهُ لِنُورِهِۦ مَن يَشَآءُ ۚ وَيَضْرِبُ ٱللَّهُ ٱلْأَمْثَٰلَ لِلنَّاسِ ۗ وَٱللَّهُ بِكُلِّ شَىْءٍ عَلِيمٌۭ","Allah göklerin ve yerin Nur'udur. O'nun nuru, içinde ışık bulunan bir kandil yuvasına benzer. O ışık bir cam içindedir, cam ise, sanki inci gibi parlayan bir yıldızdır; bu ne yalnız doğuda ve ne de yalnız batıda bulunan bereketli zeytin ağacından yakılır. Ateş değmese bile, nerdeyse yağın kendisi aydınlatacak! Nur üstüne nurdur. Allah dilediğini nuruna kavuşturur. Allah insanlara misaller verir. O, herşeyi bilir."],[31,18,"وَلَا تُصَعِّرْ خَدَّكَ لِلنَّاسِ وَلَا تَمْشِ فِى ٱلْأَرْضِ مَرَحًا ۖ إِنَّ ٱللَّهَ لَا يُحِبُّ كُلَّ مُخْتَالٍۢ فَخُورٍۢ","\"İnsanları küçümseyip yüz çevirme, yeryüzünde böbürlenerek yürüme; Allah, kendini beğenip övünen hiç kimseyi şüphesiz ki sevmez.\""],[21,87,"وَذَا ٱلنُّونِ إِذ ذَّهَبَ مُغَٰضِبًۭا فَظَنَّ أَن لَّن نَّقْدِرَ عَلَيْهِ فَنَادَىٰ فِى ٱلظُّلُمَٰتِ أَن لَّآ إِلَٰهَ إِلَّآ أَنتَ سُبْحَٰنَكَ إِنِّى كُنتُ مِنَ ٱلظَّٰلِمِينَ","Zünnun (Balık Sahibi; Yunus) hakkında söylediğimizi de an. O, öfkelenerek giderken, kendisini sıkıntıya sokmayacağımızı sanmıştı; fakat sonunda karanlıklar içinde: \"Senden başka tanrı yoktur, Sen münezzehsin, doğrusu ben haksızlık edenlerdenim\" diye seslenmişti."],[64,11,"مَآ أَصَابَ مِن مُّصِيبَةٍ إِلَّا بِإِذْنِ ٱللَّهِ ۗ وَمَن يُؤْمِنۢ بِٱللَّهِ يَهْدِ قَلْبَهُۥ ۚ وَٱللَّهُ بِكُلِّ شَىْءٍ عَلِيمٌۭ","Başa gelen hiçbir musibet Allah'ın izni olmaksızın olamaz; Allah'a kim inanırsa onun gönlünü doğruya yöneltir. Allah herşeyi bilendir."],[14,40,"رَبِّ ٱجْعَلْنِى مُقِيمَ ٱلصَّلَوٰةِ وَمِن ذُرِّيَّتِى ۚ رَبَّنَا وَتَقَبَّلْ دُعَآءِ","\"Rabbim! Beni ve çocuklarımı namaz kılanlardan eyle. Rabbimiz! Duamı kabul buyur.\""],[33,56,"إِنَّ ٱللَّهَ وَمَلَٰٓئِكَتَهُۥ يُصَلُّونَ عَلَى ٱلنَّبِىِّ ۚ يَٰٓأَيُّهَا ٱلَّذِينَ ءَامَنُوا۟ صَلُّوا۟ عَلَيْهِ وَسَلِّمُوا۟ تَسْلِيمًا","Şüphesiz Allah ve melekleri Peygamberi överler: Ey inananlar! Siz de onu övün, ona salat ve selam getirin."]]};
+</script>
 
 <script>
 (function () {
@@ -560,6 +696,7 @@ tr.fri td:first-child small { color: var(--gold); }
     els.rTo.innerHTML = NAMES[next.i] + " · <b>" + hm(next.min) + "</b>";
     renderDate(w);
     renderCards(w, next);
+    renderVerse(w);
   }
 
   /* Aylık takvim */
@@ -582,24 +719,316 @@ tr.fri td:first-child small { color: var(--gold); }
   document.getElementById("prev").addEventListener("click", function () { vm--; if (vm < 0) { vm = 11; vy--; } renderMonth(); });
   document.getElementById("next").addEventListener("click", function () { vm++; if (vm > 11) { vm = 0; vy++; } renderMonth(); });
 
-  /* Sekmeler */
-  var tabToday = document.getElementById("tab-today"), tabMonth = document.getElementById("tab-month");
-  var pToday = document.getElementById("panel-today"), pMonth = document.getElementById("panel-month");
-  function show(which) {
-    var m = which === "aylik";
-    tabToday.setAttribute("aria-selected", String(!m));
-    tabMonth.setAttribute("aria-selected", String(m));
-    pToday.hidden = m;
-    pMonth.hidden = !m;
-    if (m) {
+  /* ---------- Saatin ayeti, Kuran okuma, sekmeler ---------- */
+  var QD = window.QDATA, META = QD.meta, JUZ = QD.juz, POOL = QD.pool, BISM = QD.bism;
+  var SAJ = {}; QD.sajda.forEach(function (k) { SAJ[k] = 1; });
+  var JSTART = {}; JUZ.forEach(function (p, i) { JSTART[p[0] + ":" + p[1]] = i + 1; });
+  function $(id) { return document.getElementById(id); }
+  function esc(s) { return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;"); }
+  function sname(s) { return META[s - 1][0]; }
+  function juzOf(s, a) {
+    var j = 1;
+    for (var i = 0; i < JUZ.length; i++) { if (JUZ[i][0] < s || (JUZ[i][0] === s && JUZ[i][1] <= a)) j = i + 1; else break; }
+    return j;
+  }
+  function sget(k, d) { try { var v = localStorage.getItem(k); return v === null ? d : JSON.parse(v); } catch (e) { return d; } }
+  function sset(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
+  var SV = 'fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"';
+  var ICON = {
+    back: '<svg width="18" height="18" viewBox="0 0 24 24" ' + SV + '><path d="m15 18-6-6 6-6"/></svg>',
+    mark: '<svg width="18" height="18" viewBox="0 0 24 24" ' + SV + '><path d="M6 3h12a1 1 0 0 1 1 1v17l-7-4-7 4V4a1 1 0 0 1 1-1Z"/></svg>',
+    copy: '<svg width="17" height="17" viewBox="0 0 24 24" ' + SV + '><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>',
+    ok: '<svg width="17" height="17" viewBox="0 0 24 24" ' + SV + '><path d="m5 12 5 5 9-10"/></svg>',
+    x: '<svg width="16" height="16" viewBox="0 0 24 24" ' + SV + '><path d="M18 6 6 18M6 6l12 12"/></svg>',
+    search: '<svg width="16" height="16" viewBox="0 0 24 24" ' + SV + '><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>'
+  };
+
+  /* Kopyalama */
+  function fallbackCopy(text, done) {
+    var ta = document.createElement("textarea");
+    ta.value = text; ta.setAttribute("readonly", "");
+    ta.style.cssText = "position:fixed;opacity:0;top:0;left:0";
+    document.body.appendChild(ta); ta.select();
+    try { if (document.execCommand("copy")) done(); } catch (e) {}
+    document.body.removeChild(ta);
+  }
+  function copyText(text, done) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, function () { fallbackCopy(text, done); });
+    } else { fallbackCopy(text, done); }
+  }
+
+  /* Saatin ayeti: saat başı değişir, İstanbul saatine göre herkes için aynı ayet */
+  var vEl = { card: $("verse"), ar: $("vAr"), tr: $("vTr"), ref: $("vRef"), next: $("verseNext"), copy: $("vCopy"), open: $("vOpen"), more: $("vMore") };
+  var verseKey = -1;
+  function renderVerse(w) {
+    var hr = Math.floor(w / 3600000);
+    var idx = ((hr % POOL.length) + POOL.length) % POOL.length;
+    if (idx !== verseKey) {
+      verseKey = idx;
+      var p = POOL[idx];
+      vEl.ar.textContent = p[2];
+      vEl.tr.textContent = p[3];
+      vEl.ref.textContent = sname(p[0]) + " " + p[0] + ":" + p[1];
+      vEl.open.setAttribute("href", "#sure-" + p[0] + "-" + p[1]);
+      var long = p[2].length > 230;
+      vEl.card.classList.toggle("is-long", long);
+      vEl.card.classList.remove("open");
+      vEl.more.textContent = "Tamamını göster";
+      vEl.more.setAttribute("aria-expanded", "false");
+      vEl.more.hidden = !long;
+    }
+    var sec = 3600 - (Math.floor(w / 1000) % 3600);
+    vEl.next.textContent = "Sonraki ayet " + (sec < 60 ? "1 dk içinde" : Math.ceil(sec / 60) + " dk sonra");
+  }
+  vEl.more.addEventListener("click", function () {
+    var open = vEl.card.classList.toggle("open");
+    vEl.more.textContent = open ? "Daralt" : "Tamamını göster";
+    vEl.more.setAttribute("aria-expanded", String(open));
+  });
+  vEl.copy.addEventListener("click", function () {
+    var p = POOL[verseKey];
+    copyText(p[2] + "\n\n" + p[3] + "\n\n— " + sname(p[0]) + " " + p[0] + ":" + p[1], function () {
+      vEl.copy.textContent = "Kopyalandı";
+      setTimeout(function () { vEl.copy.textContent = "Kopyala"; }, 1600);
+    });
+  });
+
+  /* Kuran okuma: durum */
+  var qList = $("qList"), qRead = $("qRead");
+  var qData = null, qLoading = false, qWaiters = [];
+  var prefs = sget("namaz-q-pref", null) || {};
+  var size = Math.max(22, Math.min(44, +prefs.size || 30)), showMeal = prefs.meal !== false;
+  var marks = sget("namaz-q-marks", []); if (!Array.isArray(marks)) marks = [];
+  var resume = sget("namaz-q-resume", null);
+  var qView = "sure", qQuery = "", curS = 0, listScroll = 0, openTok = 0;
+  function savePrefs() { sset("namaz-q-pref", { size: size, meal: showMeal }); }
+
+  function loadQ(done) {
+    if (qData) { done(); return; }
+    qWaiters.push(done);
+    if (qLoading) return;
+    qLoading = true;
+    function flush() { qLoading = false; var w = qWaiters; qWaiters = []; w.forEach(function (f) { f(); }); }
+    fetch("quran.json").then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+      .then(function (d) { qData = d; flush(); }, function () { flush(); });
+  }
+  function blockStart(n, k) { var t = qData.tr[n - 1]; while (k > 0 && t[k] === "") k--; return k; }
+  function blockEnd(n, k) { var t = qData.tr[n - 1]; while (k + 1 < t.length && t[k + 1] === "") k++; return k; }
+  function tabsTop() { return $("tabs").getBoundingClientRect().top + window.pageYOffset - 8; }
+
+  /* Liste görünümü */
+  function renderList() {
+    var h = '<div class="q-top' + (qView === "cuz" ? " juz" : "") + '">' +
+      '<label class="search q-search" for="qSearch">' + ICON.search +
+      '<input id="qSearch" type="search" placeholder="Sure ara: ad ya da numara" autocomplete="off" aria-label="Sure ara" value="' + esc(qQuery) + '"></label>' +
+      '<div class="seg" role="tablist" aria-label="Liste türü">' +
+      '<button type="button" role="tab" data-v="sure" aria-selected="' + (qView === "sure") + '">Sureler</button>' +
+      '<button type="button" role="tab" data-v="cuz" aria-selected="' + (qView === "cuz") + '">Cüzler</button></div></div>';
+    if (resume && resume.s >= 1 && resume.s <= 114) {
+      h += '<button type="button" class="resume" data-s="' + resume.s + '" data-a="' + resume.a + '"><span><small>Kaldığın yer</small><b>' +
+        esc(sname(resume.s)) + ' ' + resume.s + ':' + resume.a + '</b></span><span class="go">Devam et →</span></button>';
+    }
+    if (marks.length) {
+      h += '<details class="marks"><summary><span>İşaretlediklerim</span><span class="cnt">' + marks.length + '</span></summary>';
+      marks.forEach(function (k) {
+        var p = k.split(":"), s = +p[0], a = +p[1], snip = "";
+        if (qData) { var m = qData.tr[s - 1][blockStart(s, a - 1)]; snip = '<small>' + esc(m.length > 90 ? m.slice(0, 90) + "…" : m) + '</small>'; }
+        h += '<div class="mrow"><button type="button" class="mopen" data-s="' + s + '" data-a="' + a + '">' + esc(sname(s)) + ' ' + s + ':' + a + snip + '</button>' +
+          '<button type="button" class="ib mdel" data-key="' + k + '" aria-label="İşareti kaldır" style="border-color:transparent;background:transparent;color:var(--muted)">' + ICON.x + '</button></div>';
+      });
+      h += '</details>';
+    }
+    h += '<div class="rows" id="qRows"></div>' +
+      '<p class="note">Arapça metin (Osmani yazım) ve Diyanet İşleri Başkanlığı meali, Al Quran Cloud servisinden alınmıştır. Diyanet meali bazı ayetleri birlikte çevirir; bu durumda meal, grubun son ayetinin altında tek parça gösterilir.</p>';
+    qList.innerHTML = h;
+    renderRows();
+  }
+  function qfold(s) { return fold(s).replace(/[^a-z0-9]/g, ""); }
+  function renderRows() {
+    var rows = $("qRows"), h = "";
+    if (qView === "cuz") {
+      JUZ.forEach(function (p, i) {
+        h += '<button type="button" class="srow" data-s="' + p[0] + '" data-a="' + p[1] + '"><span class="badge8">' + (i + 1) + '</span>' +
+          '<span class="srow-m"><b>' + (i + 1) + '. Cüz</b><small>' + esc(sname(p[0])) + ' ' + p[0] + ':' + p[1] + '</small></span>' +
+          '<span class="srow-ar" lang="ar" dir="rtl">' + esc(META[p[0] - 1][1]) + '</span></button>';
+      });
+    } else {
+      var q = qfold(qQuery);
+      META.forEach(function (m, i) {
+        var n = i + 1;
+        if (q && !(qfold(m[0]).indexOf(q) !== -1 || String(n) === q || (/^\d+$/.test(q) && String(n).indexOf(q) === 0))) return;
+        h += '<button type="button" class="srow" data-s="' + n + '"><span class="badge8">' + n + '</span>' +
+          '<span class="srow-m"><b>' + esc(m[0]) + '</b><small>' + (m[3] === "M" ? "Mekki" : "Medeni") + ' · ' + m[4] + ' ayet</small></span>' +
+          '<span class="srow-ar" lang="ar" dir="rtl">' + esc(m[1]) + '</span></button>';
+      });
+      if (!h) h = '<p class="none" style="grid-column:1/-1">Eşleşen sure bulunamadı.</p>';
+    }
+    rows.innerHTML = h;
+  }
+  qList.addEventListener("input", function (e) { if (e.target.id === "qSearch") { qQuery = e.target.value; renderRows(); } });
+  qList.addEventListener("click", function (e) {
+    var t = e.target.closest ? e.target.closest("button") : null; if (!t) return;
+    if (t.hasAttribute("data-v")) { qView = t.getAttribute("data-v"); renderList(); return; }
+    if (t.classList.contains("mdel")) {
+      var key = t.getAttribute("data-key"), i = marks.indexOf(key);
+      if (i !== -1) { marks.splice(i, 1); sset("namaz-q-marks", marks); }
+      var open = qList.querySelector(".marks") && qList.querySelector(".marks").open;
+      renderList(); if (open && marks.length) qList.querySelector(".marks").open = true;
+      return;
+    }
+    var s = t.getAttribute("data-s"); if (!s) return;
+    var a = t.getAttribute("data-a");
+    listScroll = window.pageYOffset;
+    go("sure-" + s + (a && a !== "1" ? "-" + a : ""));
+  });
+
+  /* Okuma görünümü */
+  var obs = null, moved = false, startY = 0, saveT = 0, flashT = 0, armT = 0;
+  function leaveReader() {
+    if (obs) { obs.disconnect(); obs = null; }
+    clearTimeout(armT); clearTimeout(flashT);
+  }
+  function ayHtml(n, k, text) {
+    var key = n + ":" + k, on = marks.indexOf(key) !== -1, out = "";
+    if (JSTART[key]) out += '<div class="juz-div"><span>' + JSTART[key] + '. Cüz</span></div>';
+    out += '<article class="ay" id="ay-' + k + '" data-a="' + k + '"><header class="ay-h"><span class="ay-no"><span class="badge8">' + k + '</span>' +
+      (SAJ[key] ? '<span class="saj">Secde</span>' : "") + '</span><div class="ay-act">' +
+      '<button type="button" class="ib" data-act="mark" data-a="' + k + '" aria-pressed="' + on + '" aria-label="Ayeti işaretle">' + ICON.mark + '</button>' +
+      '<button type="button" class="ib" data-act="copy" data-a="' + k + '" aria-label="Ayeti kopyala">' + ICON.copy + '</button></div></header>' +
+      '<p class="ay-ar" lang="ar" dir="rtl">' + esc(text) + '</p></article>';
+    return out;
+  }
+  function renderReader(n, a) {
+    var m = META[n - 1], ar = qData.ar[n - 1], tr = qData.tr[n - 1];
+    var j1 = juzOf(n, 1), j2 = juzOf(n, ar.length);
+    var h = '<div class="r-bar" role="toolbar" aria-label="Okuma ayarları">' +
+      '<button type="button" class="ib" data-act="back" aria-label="Sure listesine dön">' + ICON.back + '</button>' +
+      '<span class="r-title">' + esc(m[0]) + '</span>' +
+      '<button type="button" class="ib" data-act="szdn" aria-label="Yazıyı küçült"' + (size <= 22 ? " disabled" : "") + '>A−</button>' +
+      '<button type="button" class="ib" data-act="szup" aria-label="Yazıyı büyüt"' + (size >= 44 ? " disabled" : "") + '>A+</button>' +
+      '<button type="button" class="ib" data-act="meal" aria-pressed="' + showMeal + '">Meal</button></div>' +
+      '<div class="r-head"><div class="r-ar" lang="ar" dir="rtl">' + esc(m[2]) + '</div><h2 class="r-tr">' + esc(m[0]) + '</h2>' +
+      '<p class="r-meta">' + (m[3] === "M" ? "Mekki" : "Medeni") + ' · ' + m[4] + ' ayet · ' + (j1 === j2 ? j1 + ". cüz" : j1 + "–" + j2 + ". cüz") + '</p></div>';
+    if (n !== 1 && n !== 9) h += '<p class="bism" lang="ar" dir="rtl">' + esc(BISM) + '</p>';
+    var i = 0;
+    while (i < ar.length) {
+      var j = i; while (j + 1 < ar.length && tr[j + 1] === "") j++;
+      for (var k = i; k <= j; k++) h += ayHtml(n, k + 1, ar[k]);
+      h += '<p class="mealblk">' + (j > i ? '<span class="rng">' + (i + 1) + '–' + (j + 1) + '. ayetlerin meali</span>' : "") + esc(tr[i]) + '</p>';
+      i = j + 1;
+    }
+    h += '<div class="r-nav">' +
+      (n > 1 ? '<button type="button" class="nv" data-act="goto" data-s="' + (n - 1) + '"><small>Önceki sure</small><b>' + esc(sname(n - 1)) + '</b></button>' : '<span></span>') +
+      (n < 114 ? '<button type="button" class="nv" data-act="goto" data-s="' + (n + 1) + '"><small>Sonraki sure</small><b>' + esc(sname(n + 1)) + '</b></button>' : '<span></span>') + '</div>';
+    qRead.innerHTML = h;
+    qRead.style.setProperty("--ar-size", size + "px");
+    qRead.classList.toggle("no-meal", !showMeal);
+    var el = a > 1 ? $("ay-" + a) : null;
+    if (el) {
+      el.scrollIntoView({ block: "start" });
+      el.classList.add("flash");
+      flashT = setTimeout(function () { el.classList.remove("flash"); }, 2200);
+    } else { window.scrollTo(0, tabsTop()); }
+    armT = setTimeout(function () { trackResume(n); }, 500);
+  }
+  function trackResume(n) {
+    if (!("IntersectionObserver" in window)) return;
+    moved = false; startY = window.pageYOffset;
+    obs = new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        if (!e.isIntersecting || !moved) return;
+        resume = { s: n, a: +e.target.getAttribute("data-a") };
+        clearTimeout(saveT); saveT = setTimeout(function () { sset("namaz-q-resume", resume); }, 600);
+      });
+    }, { rootMargin: "-12% 0px -80% 0px", threshold: 0 });
+    qRead.querySelectorAll(".ay").forEach(function (e) { obs.observe(e); });
+  }
+  window.addEventListener("scroll", function () {
+    if (!moved && obs && Math.abs(window.pageYOffset - startY) > 60) moved = true;
+  }, { passive: true });
+
+  function openSurah(n, a) {
+    leaveReader();
+    if (!(n >= 1 && n <= 114)) { go("kuran"); return; }
+    curS = n;
+    qList.hidden = true; qRead.hidden = false;
+    qRead.innerHTML = '<p class="none">Yükleniyor…</p>';
+    var tok = ++openTok;
+    loadQ(function () {
+      if (tok !== openTok) return;
+      if (!qData) {
+        qRead.innerHTML = '<p class="none">Kuran metni yüklenemedi.</p><p class="none" style="padding-top:0"><button type="button" class="pillbtn" data-act="retry">Tekrar dene</button></p>';
+        return;
+      }
+      renderReader(n, a);
+    });
+  }
+  function showList() {
+    leaveReader(); openTok++;
+    qRead.hidden = true; qRead.innerHTML = ""; qList.hidden = false;
+    renderList();
+    if (listScroll) { window.scrollTo(0, listScroll); listScroll = 0; }
+    loadQ(function () { if (qData && !qList.hidden && marks.length && qList.querySelector(".marks") && !qList.querySelector(".mopen small")) { var o = qList.querySelector(".marks").open; renderList(); if (o) qList.querySelector(".marks").open = true; } });
+  }
+  qRead.addEventListener("click", function (e) {
+    var b = e.target.closest ? e.target.closest("[data-act]") : null; if (!b) return;
+    var act = b.getAttribute("data-act");
+    if (act === "back") { go("kuran"); }
+    else if (act === "goto") { go("sure-" + b.getAttribute("data-s")); }
+    else if (act === "retry") { route(); }
+    else if (act === "szup" || act === "szdn") {
+      size = Math.max(22, Math.min(44, size + (act === "szup" ? 2 : -2)));
+      qRead.style.setProperty("--ar-size", size + "px");
+      qRead.querySelector('[data-act="szdn"]').disabled = size <= 22;
+      qRead.querySelector('[data-act="szup"]').disabled = size >= 44;
+      savePrefs();
+    }
+    else if (act === "meal") { showMeal = !showMeal; qRead.classList.toggle("no-meal", !showMeal); b.setAttribute("aria-pressed", String(showMeal)); savePrefs(); }
+    else if (act === "mark") {
+      var key = curS + ":" + b.getAttribute("data-a"), i = marks.indexOf(key);
+      if (i === -1) marks.push(key); else marks.splice(i, 1);
+      sset("namaz-q-marks", marks);
+      b.setAttribute("aria-pressed", String(i === -1));
+    }
+    else if (act === "copy") {
+      var a = +b.getAttribute("data-a"), k = a - 1, s0 = blockStart(curS, k);
+      var text = qData.ar[curS - 1][k] + "\n\n" + qData.tr[curS - 1][s0] + "\n\n— " + sname(curS) + " " + curS + ":" + a;
+      copyText(text, function () {
+        b.innerHTML = ICON.ok; b.classList.add("done");
+        setTimeout(function () { b.innerHTML = ICON.copy; b.classList.remove("done"); }, 1400);
+      });
+    }
+  });
+
+  /* Sekmeler ve yönlendirme */
+  var tabToday = $("tab-today"), tabMonth = $("tab-month"), tabQuran = $("tab-quran");
+  var pToday = $("panel-today"), pMonth = $("panel-month"), pQuran = $("panel-quran");
+  var TABS = { bugun: [tabToday, pToday], aylik: [tabMonth, pMonth], kuran: [tabQuran, pQuran] };
+  function showTab(name) {
+    Object.keys(TABS).forEach(function (k) {
+      TABS[k][0].setAttribute("aria-selected", String(k === name));
+      TABS[k][1].hidden = k !== name;
+    });
+    if (name !== "kuran") { leaveReader(); openTok++; }
+    if (name === "aylik") {
       var w = new Date(wallNow());
       if (vy === undefined) { vy = w.getUTCFullYear(); vm = w.getUTCMonth(); }
       renderMonth();
     }
   }
-  tabToday.addEventListener("click", function () { location.hash = "bugun"; show("bugun"); });
-  tabMonth.addEventListener("click", function () { location.hash = "aylik"; show("aylik"); });
-  window.addEventListener("hashchange", function () { show(location.hash === "#aylik" ? "aylik" : "bugun"); });
+  function route() {
+    var hs = location.hash.replace(/^#/, ""), m;
+    if (hs === "aylik") { showTab("aylik"); }
+    else if (hs === "kuran") { showTab("kuran"); showList(); }
+    else if ((m = /^sure-(\d{1,3})(?:-(\d{1,3}))?$/.exec(hs))) { showTab("kuran"); openSurah(+m[1], m[2] ? +m[2] : 1); }
+    else { showTab("bugun"); }
+  }
+  function go(hs) { if (location.hash === "#" + hs) route(); else location.hash = hs; }
+  tabToday.addEventListener("click", function () { go("bugun"); });
+  tabMonth.addEventListener("click", function () { go("aylik"); });
+  tabQuran.addEventListener("click", function () { go("kuran"); });
+  window.addEventListener("hashchange", route);
 
   /* İlçe seçici */
   var picker = document.getElementById("picker"), pickBody = document.getElementById("pickBody");
@@ -609,8 +1038,7 @@ tr.fri td:first-child small { color: var(--gold); }
   var CHECK = '<svg class="ok" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5 9-10"/></svg>';
 
   function fold(s) {
-    return s.toLocaleLowerCase("tr").replace(/ı/g, "i").replace(/ş/g, "s").replace(/ğ/g, "g")
-      .replace(/ü/g, "u").replace(/ö/g, "o").replace(/ç/g, "c");
+    return s.toLocaleLowerCase("tr").normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/ı/g, "i");
   }
   function buildPicker(q) {
     q = fold((q || "").trim());
@@ -696,7 +1124,7 @@ tr.fri td:first-child small { color: var(--gold); }
   } catch (e) {}
 
   applyLocation();
-  show(location.hash === "#aylik" ? "aylik" : "bugun");
+  route();
   setInterval(tick, 1000);
 })();
 </script>

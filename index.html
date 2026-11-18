@@ -1,4 +1,9 @@
-<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
 <title>Namaz Vakitleri</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -325,30 +330,35 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 /* Kuran: okuma */
 .r-bar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 30; display: flex; align-items: center; gap: 8px; padding: 10px 0; margin-bottom: 4px; background: var(--bg); border-bottom: 1px solid var(--line); }
 .r-title { flex: 1; min-width: 0; font-family: var(--font-display); font-size: 18px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.r-head { padding: 26px 0 8px; text-align: center; }
-.r-ar { font-family: var(--font-ar); font-size: clamp(34px, 8vw, 46px); line-height: 1.7; }
-.r-tr { margin: 0 0 6px; font-family: var(--font-display); font-weight: 500; font-size: 26px; }
-.r-meta { margin: 0; color: var(--muted); font-size: 13.5px; }
-.bism { margin: 18px 0 4px; font-family: var(--font-ar); font-size: calc(var(--ar-size, 30px) * 1.05); line-height: 2; text-align: center; color: var(--time); }
-.juz-div { display: flex; align-items: center; gap: 12px; margin: 28px 0 4px; color: var(--muted); font-size: 11.5px; font-weight: 600; letter-spacing: .15em; text-transform: uppercase; }
+.r-head { margin: 22px 0 6px; padding: 26px 16px 22px; text-align: center; background: var(--surface); border: 1px solid var(--line); border-radius: 22px; }
+.r-ar { font-family: var(--font-ar); font-size: clamp(40px, 11vw, 56px); line-height: 1.6; color: var(--gold-ink); }
+.r-tr { margin: 0 0 12px; font-family: var(--font-display); font-weight: 500; font-size: 26px; }
+.r-chips { display: flex; justify-content: center; flex-wrap: wrap; gap: 6px; }
+.r-chips span { padding: 4px 11px; border-radius: 999px; background: var(--pill); color: var(--muted); font-size: 12.5px; font-weight: 500; }
+.r-hint { margin: 14px 0 0; text-align: center; color: var(--muted); font-size: 12.5px; }
+.bism { display: flex; align-items: center; gap: 14px; margin: 22px 0 6px; font-family: var(--font-ar); font-size: calc(var(--ar-size, 30px) * 1.05); line-height: 2; color: var(--time); }
+.bism::before, .bism::after { content: ""; flex: 1; height: 1px; background: linear-gradient(90deg, transparent, var(--gold-ink)); opacity: .55; }
+.bism::after { transform: scaleX(-1); }
+.bism span { flex: none; max-width: 80%; text-align: center; }
+.juz-div { display: flex; align-items: center; gap: 12px; margin: 30px 0 0; color: var(--gold-ink); font-size: 11.5px; font-weight: 600; letter-spacing: .15em; text-transform: uppercase; }
 .juz-div::before, .juz-div::after { content: ""; flex: 1; height: 1px; background: var(--line); }
-.ay { padding: 18px 10px 4px; margin: 0 -10px; scroll-margin-top: 76px; border-radius: 14px; }
-.ay-h { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
-.ay-no { display: flex; align-items: center; gap: 10px; }
-.ay .badge8 { width: 34px; height: 34px; font-size: 11px; }
-.saj { font-size: 11px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--gold-ink); }
-.ay-act { display: flex; gap: 4px; }
-.ay-act .ib { min-width: 36px; height: 36px; padding: 0; border-color: transparent; background: transparent; color: var(--muted); }
-.ay-act .ib:hover { background: var(--pill); }
-.ay-act .ib[aria-pressed="true"] { background: transparent; border-color: transparent; color: var(--gold-ink); }
-.ay-act .ib[aria-pressed="true"] svg { fill: currentColor; }
-.ay-act .ib.done { color: var(--gold-ink); }
-.ay-ar { margin: 6px 0 2px; font-family: var(--font-ar); font-size: var(--ar-size, 30px); line-height: 2.2; text-align: right; }
-.mealblk { margin: 4px 0 6px; padding-bottom: 18px; border-bottom: 1px solid var(--line); font-size: 15.5px; line-height: 1.65; color: var(--time); text-wrap: pretty; }
-.mealblk .rng { display: block; margin-bottom: 4px; font-size: 11.5px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
-.no-meal .mealblk { display: none; }
-.no-meal .ay { border-bottom: 1px solid var(--line); padding-bottom: 12px; border-radius: 0; }
-.ay.flash { background: rgba(233, 178, 53, .16); }
+.blk { margin: 14px 0 0; padding: 18px 16px 16px; background: var(--surface); border: 1px solid var(--line); border-radius: 20px; }
+.blk-ar { margin: 0; font-family: var(--font-ar); font-size: var(--ar-size, 30px); line-height: 2.2; text-align: right; text-wrap: pretty; }
+.v { scroll-margin-top: 90px; border-radius: 10px; transition: background .4s; }
+.v.flash { background: rgba(233, 178, 53, .22); }
+.vn { display: inline-grid; place-items: center; vertical-align: middle; width: 2.1em; height: 2.1em; margin: 0 .35em; padding: 0; border: 1.5px solid var(--gold-ink); border-radius: 50%; background: transparent; color: var(--gold-ink); font: 600 .42em/1 var(--font-body, system-ui, sans-serif); cursor: pointer; }
+.vn.on { background: var(--gold-ink); color: var(--bg); }
+.vn.open { box-shadow: 0 0 0 3px rgba(233, 178, 53, .35); }
+.tray { display: flex; align-items: center; gap: 8px; margin-top: 10px; padding: 8px 10px; border-radius: 14px; background: var(--pill); font-size: 13.5px; }
+.tray b { margin-right: auto; font-weight: 600; }
+.tray .pillbtn { padding: 6px 12px; font-size: 13px; }
+.tray .pillbtn[aria-pressed="true"] { background: var(--gold-ink); border-color: var(--gold-ink); color: var(--bg); }
+.blk-tr { margin-top: 14px; padding-top: 14px; border-top: 1px dashed var(--line); font-size: 16px; line-height: 1.72; color: var(--fg); text-wrap: pretty; }
+.blk-tr .rng, .blk-tr .saj { display: inline-block; margin: 0 8px 6px 0; font-size: 11.5px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; }
+.blk-tr .rng { color: var(--muted); }
+.saj { color: var(--gold-ink); }
+.no-meal .blk-tr { display: none; }
+.orn { display: block; width: 14px; height: 14px; margin: 14px auto 0; color: var(--gold-ink); opacity: .6; }
 .r-nav { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 26px; }
 .nv { display: flex; flex-direction: column; gap: 2px; padding: 12px 16px; background: var(--surface); border: 1px solid var(--line); border-radius: 16px; color: var(--fg); font: inherit; text-align: left; cursor: pointer; }
 .nv:last-child:not(:only-child) { text-align: right; }
@@ -360,7 +370,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
   .rows { grid-template-columns: minmax(0, 1fr); }
   .verse { padding: 18px 18px 16px; }
 }
-@media (prefers-reduced-motion: no-preference) { .ay.flash { transition: background 1.2s ease; } }
+@media (prefers-reduced-motion: no-preference) { .v.flash { transition: background 1.2s ease; } }
 </style>
 
 <header class="bar">
@@ -889,15 +899,11 @@ window.QDATA = {"meta":[["Fâtiha","ٱلْفَاتِحَةِ","سُورَةُ ٱ
     if (obs) { obs.disconnect(); obs = null; }
     clearTimeout(armT); clearTimeout(flashT);
   }
-  function ayHtml(n, k, text) {
-    var key = n + ":" + k, on = marks.indexOf(key) !== -1, out = "";
-    if (JSTART[key]) out += '<div class="juz-div"><span>' + JSTART[key] + '. Cüz</span></div>';
-    out += '<article class="ay" id="ay-' + k + '" data-a="' + k + '"><header class="ay-h"><span class="ay-no"><span class="badge8">' + k + '</span>' +
-      (SAJ[key] ? '<span class="saj">Secde</span>' : "") + '</span><div class="ay-act">' +
-      '<button type="button" class="ib" data-act="mark" data-a="' + k + '" aria-pressed="' + on + '" aria-label="Ayeti işaretle">' + ICON.mark + '</button>' +
-      '<button type="button" class="ib" data-act="copy" data-a="' + k + '" aria-label="Ayeti kopyala">' + ICON.copy + '</button></div></header>' +
-      '<p class="ay-ar" lang="ar" dir="rtl">' + esc(text) + '</p></article>';
-    return out;
+  var ORN = '<svg class="orn" viewBox="0 0 14 14" aria-hidden="true"><rect x="2.5" y="2.5" width="9" height="9" fill="none" stroke="currentColor"/><rect x="2.5" y="2.5" width="9" height="9" fill="none" stroke="currentColor" transform="rotate(45 7 7)"/></svg>';
+  function vHtml(n, k, text) {
+    var key = n + ":" + k, on = marks.indexOf(key) !== -1;
+    return '<span class="v" id="ay-' + k + '" data-a="' + k + '">' + esc(text) +
+      '<button type="button" class="vn' + (on ? " on" : "") + '" data-act="vn" data-a="' + k + '" aria-label="' + k + '. ayet seçenekleri">' + k + '</button></span> ';
   }
   function renderReader(n, a) {
     var m = META[n - 1], ar = qData.ar[n - 1], tr = qData.tr[n - 1];
@@ -909,13 +915,20 @@ window.QDATA = {"meta":[["Fâtiha","ٱلْفَاتِحَةِ","سُورَةُ ٱ
       '<button type="button" class="ib" data-act="szup" aria-label="Yazıyı büyüt"' + (size >= 44 ? " disabled" : "") + '>A+</button>' +
       '<button type="button" class="ib" data-act="meal" aria-pressed="' + showMeal + '">Meal</button></div>' +
       '<div class="r-head"><div class="r-ar" lang="ar" dir="rtl">' + esc(m[2]) + '</div><h2 class="r-tr">' + esc(m[0]) + '</h2>' +
-      '<p class="r-meta">' + (m[3] === "M" ? "Mekki" : "Medeni") + ' · ' + m[4] + ' ayet · ' + (j1 === j2 ? j1 + ". cüz" : j1 + "–" + j2 + ". cüz") + '</p></div>';
-    if (n !== 1 && n !== 9) h += '<p class="bism" lang="ar" dir="rtl">' + esc(BISM) + '</p>';
+      '<div class="r-chips"><span>' + (m[3] === "M" ? "Mekki" : "Medeni") + '</span><span>' + m[4] + ' ayet</span><span>' + (j1 === j2 ? j1 + ". cüz" : j1 + "–" + j2 + ". cüz") + '</span></div></div>' +
+      '<p class="r-hint">Ayet numarasına dokunarak işaretleyebilir veya kopyalayabilirsiniz.</p>';
+    if (n !== 1 && n !== 9) h += '<p class="bism" lang="ar" dir="rtl"><span>' + esc(BISM) + '</span></p>';
     var i = 0;
     while (i < ar.length) {
       var j = i; while (j + 1 < ar.length && tr[j + 1] === "") j++;
-      for (var k = i; k <= j; k++) h += ayHtml(n, k + 1, ar[k]);
-      h += '<p class="mealblk">' + (j > i ? '<span class="rng">' + (i + 1) + '–' + (j + 1) + '. ayetlerin meali</span>' : "") + esc(tr[i]) + '</p>';
+      var jk = "";
+      for (var k = i; k <= j; k++) if (JSTART[n + ":" + (k + 1)]) jk = JSTART[n + ":" + (k + 1)];
+      if (jk) h += '<div class="juz-div"><span>' + jk + '. Cüz</span></div>';
+      h += '<section class="blk"><p class="blk-ar" lang="ar" dir="rtl">';
+      var sj = false;
+      for (var k2 = i; k2 <= j; k2++) { h += vHtml(n, k2 + 1, ar[k2]); if (SAJ[n + ":" + (k2 + 1)]) sj = true; }
+      h += '</p><div class="blk-tr">' + (sj ? '<span class="saj">Secde ayeti</span>' : "") +
+        (j > i ? '<span class="rng">' + (i + 1) + '–' + (j + 1) + '. ayetlerin meali</span><br>' : "") + esc(tr[i]) + '</div></section>';
       i = j + 1;
     }
     h += '<div class="r-nav">' +
@@ -942,7 +955,7 @@ window.QDATA = {"meta":[["Fâtiha","ٱلْفَاتِحَةِ","سُورَةُ ٱ
         clearTimeout(saveT); saveT = setTimeout(function () { sset("namaz-q-resume", resume); }, 600);
       });
     }, { rootMargin: "-12% 0px -80% 0px", threshold: 0 });
-    qRead.querySelectorAll(".ay").forEach(function (e) { obs.observe(e); });
+    qRead.querySelectorAll(".v").forEach(function (e) { obs.observe(e); });
   }
   window.addEventListener("scroll", function () {
     if (!moved && obs && Math.abs(window.pageYOffset - startY) > 60) moved = true;
@@ -985,18 +998,32 @@ window.QDATA = {"meta":[["Fâtiha","ٱلْفَاتِحَةِ","سُورَةُ ٱ
       savePrefs();
     }
     else if (act === "meal") { showMeal = !showMeal; qRead.classList.toggle("no-meal", !showMeal); b.setAttribute("aria-pressed", String(showMeal)); savePrefs(); }
+    else if (act === "vn") {
+      var ak = +b.getAttribute("data-a"), blk = b.closest(".blk"), old = blk.querySelector(".tray");
+      var same = old && +old.getAttribute("data-a") === ak;
+      qRead.querySelectorAll(".tray").forEach(function (t) { t.parentNode.removeChild(t); });
+      qRead.querySelectorAll(".vn.open").forEach(function (t) { t.classList.remove("open"); });
+      if (same) return;
+      var on = marks.indexOf(curS + ":" + ak) !== -1;
+      var tray = document.createElement("div"); tray.className = "tray"; tray.setAttribute("data-a", ak);
+      tray.innerHTML = '<b>' + ak + '. ayet</b><button type="button" class="pillbtn" data-act="mark" data-a="' + ak + '" aria-pressed="' + on + '">' + (on ? "İşaretli" : "İşaretle") + '</button>' +
+        '<button type="button" class="pillbtn" data-act="copy" data-a="' + ak + '">Kopyala</button>';
+      blk.querySelector(".blk-ar").insertAdjacentElement("afterend", tray);
+      b.classList.add("open");
+    }
     else if (act === "mark") {
       var key = curS + ":" + b.getAttribute("data-a"), i = marks.indexOf(key);
       if (i === -1) marks.push(key); else marks.splice(i, 1);
       sset("namaz-q-marks", marks);
-      b.setAttribute("aria-pressed", String(i === -1));
+      b.setAttribute("aria-pressed", String(i === -1)); b.textContent = i === -1 ? "İşaretli" : "İşaretle";
+      var vb = qRead.querySelector('.vn[data-a="' + b.getAttribute("data-a") + '"]'); if (vb) vb.classList.toggle("on", i === -1);
     }
     else if (act === "copy") {
       var a = +b.getAttribute("data-a"), k = a - 1, s0 = blockStart(curS, k);
       var text = qData.ar[curS - 1][k] + "\n\n" + qData.tr[curS - 1][s0] + "\n\n— " + sname(curS) + " " + curS + ":" + a;
       copyText(text, function () {
-        b.innerHTML = ICON.ok; b.classList.add("done");
-        setTimeout(function () { b.innerHTML = ICON.copy; b.classList.remove("done"); }, 1400);
+        b.textContent = "Kopyalandı";
+        setTimeout(function () { b.textContent = "Kopyala"; }, 1400);
       });
     }
   });
@@ -1129,4 +1156,5 @@ window.QDATA = {"meta":[["Fâtiha","ٱلْفَاتِحَةِ","سُورَةُ ٱ
 })();
 </script>
 
-</body></html>
+</body>
+</html>
